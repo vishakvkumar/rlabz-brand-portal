@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --color-navy: #002c49;
+  --color-flame: #f9440d;
+  --color-cyan: #27a3ff;
+  --color-green: #43ae47;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  background-color: #001220;
+  color: #ffffff;
+}
+
+/* User-Specified Glowing Glass Mesh Canvas */
+body {
+  background-color: #001220;
+  background-image: 
+    radial-gradient(at 10% 15%, rgba(39, 163, 255, 0.35) 0px, transparent 55%),
+    radial-gradient(at 90% 20%, rgba(67, 174, 71, 0.28) 0px, transparent 50%),
+    radial-gradient(at 50% 85%, rgba(0, 44, 73, 0.8) 0px, transparent 65%),
+    radial-gradient(at 80% 80%, rgba(249, 68, 13, 0.12) 0px, transparent 45%);
+  background-attachment: fixed;
+  background-size: cover;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+/* Transparent Frosted Glass Cards (rgba(255, 255, 255, 0.05) + backdrop-filter blur(20px)) */
+.frosted-glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
+    0 15px 35px -10px rgba(0, 0, 0, 0.5);
+}
+
+.frosted-glass-card:hover {
+  border-color: rgba(39, 163, 255, 0.35);
+  border-top-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.075);
+}
+
+/* Floating Frosted Pill Navbar */
+.frosted-nav-pill {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Illuminated Glass Pedestal Showcase */
+.glass-pedestal {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 25px 50px -15px rgba(0, 0, 0, 0.6),
+    inset 0 0 40px rgba(39, 163, 255, 0.12);
+}
+
+/* Blend Screen Mode for Logo Assets */
+.logo-blend-screen {
+  mix-blend-mode: screen;
+  filter: contrast(1.15) brightness(1.05);
+}
+
+/* Liquid Glass Buttons */
+.btn-glass-primary {
+  background: linear-gradient(135deg, #27a3ff 0%, #0064a3 50%, #43ae47 100%);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 8px 24px -6px rgba(39, 163, 255, 0.45);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-glass-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px -4px rgba(39, 163, 255, 0.65);
+  filter: brightness(1.1);
+}
+
+.btn-glass-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-glass-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(39, 163, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #001220;
+}
+::-webkit-scrollbar-thumb {
+  background: #002c49;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #27a3ff;
+}
