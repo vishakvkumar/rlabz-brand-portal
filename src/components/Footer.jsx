@@ -5,13 +5,13 @@ import { ShieldCheck } from 'lucide-react';
 
 export const Footer = () => {
   return (
-    <footer className="py-12 border-t border-[#27a3ff]/20 bg-[#041525] text-slate-400 transition-colors relative">
+    <footer className="py-12 border-t border-[#27a3ff]/20 bg-[var(--rl-bg)] text-[var(--rl-muted)] transition-colors relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-slate-800/60">
-          
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-[var(--rl-surface-border)]">
+
           <div className="md:col-span-6 flex flex-col items-start gap-3">
-            <CrucibleLogo variant="dark" size={40} />
-            <p className="text-xs text-slate-400 max-w-md">
+            <CrucibleLogo variant="auto" size={40} />
+            <p className="text-xs text-[var(--rl-muted)] max-w-md">
               Official internal Design System & Brand Identity Portal for RLabZ Design | Development | Training.
             </p>
           </div>
@@ -28,7 +28,7 @@ export const Footer = () => {
 
         </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--rl-muted)]">
           <span>&copy; {new Date().getFullYear()} RLabZ Inc. All rights reserved. Internal Brand Portal.</span>
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#43ae47]" />

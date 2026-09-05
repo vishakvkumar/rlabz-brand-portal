@@ -1,72 +1,212 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-:root {
+/*
+  ------------------------------------------------------------------------
+  RLabZ Theme Tokens
+  ------------------------------------------------------------------------
+  The 4 brand colors (Navy #002c49, Cyan #27a3ff, Green #43ae47,
+  Flame #f9440d) are fixed per brand guidelines and never change between
+  themes — only the portal's own chrome (backgrounds, surfaces, and text
+  roles) varies. Three themes are offered:
+
+  "navy"     (default) — refined corporate dark, mirrors the official
+              deck's dark navy slides. Single-tone canvas, no neon glow.
+  "paper"    — true light mode, mirrors the letterhead / light deck
+              slides / email signature: white & Cloud Blue surfaces,
+              Charcoal & Slate Text copy.
+  "midnight" — a quieter alternate dark mood: near-black navy canvas,
+              lower-contrast glow, green-forward secondary emphasis.
+  ------------------------------------------------------------------------
+*/
+
+:root,
+[data-theme="navy"] {
   --color-navy: #002c49;
   --color-flame: #f9440d;
   --color-cyan: #27a3ff;
   --color-green: #43ae47;
+
+  --rl-bg: #001526;
+  --rl-bg-image:
+    radial-gradient(at 15% 10%, rgba(39, 163, 255, 0.16) 0px, transparent 55%),
+    radial-gradient(at 85% 90%, rgba(67, 174, 71, 0.12) 0px, transparent 55%),
+    radial-gradient(at 50% 50%, rgba(0, 44, 73, 0.9) 0px, transparent 70%);
+
+  --rl-heading: #ffffff;
+  --rl-body: #cbd5e1;
+  --rl-muted: #94a3b8;
+  --rl-faint: #64748b;
+
+  --rl-surface: rgba(255, 255, 255, 0.05);
+  --rl-surface-hover: rgba(255, 255, 255, 0.075);
+  --rl-surface-border: rgba(255, 255, 255, 0.12);
+  --rl-surface-border-top: rgba(255, 255, 255, 0.25);
+  --rl-surface-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+
+  --rl-nav-bg: rgba(255, 255, 255, 0.06);
+  --rl-nav-border: rgba(255, 255, 255, 0.15);
+  --rl-nav-border-top: rgba(255, 255, 255, 0.3);
+
+  --rl-chip-bg: rgba(255, 255, 255, 0.04);
+  --rl-overlay: rgba(0, 0, 0, 0.4);
+
+  --rl-btn-secondary-bg: rgba(255, 255, 255, 0.06);
+  --rl-btn-secondary-border: rgba(255, 255, 255, 0.18);
+  --rl-btn-secondary-border-top: rgba(255, 255, 255, 0.35);
+  --rl-btn-secondary-hover: rgba(255, 255, 255, 0.12);
+
+  --rl-scrollbar-track: #001220;
+  --rl-scrollbar-thumb: #002c49;
+
+  color-scheme: dark;
+}
+
+[data-theme="paper"] {
+  --color-navy: #002c49;
+  --color-flame: #f9440d;
+  --color-cyan: #27a3ff;
+  --color-green: #43ae47;
+
+  --rl-bg: #f5f7fa;
+  --rl-bg-image:
+    radial-gradient(at 10% 0%, rgba(39, 163, 255, 0.06) 0px, transparent 50%),
+    radial-gradient(at 90% 100%, rgba(67, 174, 71, 0.05) 0px, transparent 50%);
+
+  --rl-heading: #002c49;
+  --rl-body: #3e4b55;
+  --rl-muted: #6b7a87;
+  --rl-faint: #8fa9bc;
+
+  --rl-surface: rgba(255, 255, 255, 0.75);
+  --rl-surface-hover: rgba(255, 255, 255, 0.92);
+  --rl-surface-border: rgba(0, 44, 73, 0.1);
+  --rl-surface-border-top: rgba(255, 255, 255, 0.9);
+  --rl-surface-shadow: 0 15px 35px -12px rgba(0, 44, 73, 0.18);
+
+  --rl-nav-bg: rgba(255, 255, 255, 0.85);
+  --rl-nav-border: rgba(0, 44, 73, 0.1);
+  --rl-nav-border-top: rgba(255, 255, 255, 0.95);
+
+  --rl-chip-bg: rgba(0, 44, 73, 0.04);
+  --rl-overlay: rgba(0, 44, 73, 0.55);
+
+  --rl-btn-secondary-bg: rgba(0, 44, 73, 0.05);
+  --rl-btn-secondary-border: rgba(0, 44, 73, 0.16);
+  --rl-btn-secondary-border-top: rgba(0, 44, 73, 0.22);
+  --rl-btn-secondary-hover: rgba(0, 44, 73, 0.1);
+
+  --rl-scrollbar-track: #e3e9ed;
+  --rl-scrollbar-thumb: #8fa9bc;
+
+  color-scheme: light;
+}
+
+[data-theme="midnight"] {
+  --color-navy: #002c49;
+  --color-flame: #f9440d;
+  --color-cyan: #27a3ff;
+  --color-green: #43ae47;
+
+  --rl-bg: #00080f;
+  --rl-bg-image:
+    radial-gradient(at 20% 15%, rgba(67, 174, 71, 0.1) 0px, transparent 50%),
+    radial-gradient(at 80% 85%, rgba(39, 163, 255, 0.08) 0px, transparent 50%);
+
+  --rl-heading: #f1f5f9;
+  --rl-body: #a8b6c4;
+  --rl-muted: #768694;
+  --rl-faint: #556270;
+
+  --rl-surface: rgba(255, 255, 255, 0.035);
+  --rl-surface-hover: rgba(255, 255, 255, 0.055);
+  --rl-surface-border: rgba(255, 255, 255, 0.08);
+  --rl-surface-border-top: rgba(255, 255, 255, 0.16);
+  --rl-surface-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.65);
+
+  --rl-nav-bg: rgba(255, 255, 255, 0.04);
+  --rl-nav-border: rgba(255, 255, 255, 0.1);
+  --rl-nav-border-top: rgba(255, 255, 255, 0.2);
+
+  --rl-chip-bg: rgba(255, 255, 255, 0.03);
+  --rl-overlay: rgba(0, 0, 0, 0.5);
+
+  --rl-btn-secondary-bg: rgba(255, 255, 255, 0.04);
+  --rl-btn-secondary-border: rgba(255, 255, 255, 0.12);
+  --rl-btn-secondary-border-top: rgba(255, 255, 255, 0.22);
+  --rl-btn-secondary-hover: rgba(255, 255, 255, 0.08);
+
+  --rl-scrollbar-track: #00080f;
+  --rl-scrollbar-thumb: #1e3a52;
+
+  color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-  background-color: #001220;
-  color: #ffffff;
+  background-color: var(--rl-bg);
+  color: var(--rl-heading);
 }
 
-/* User-Specified Glowing Glass Mesh Canvas */
+/* Theme-driven canvas — a single cohesive tone per theme, not a multi-color glow */
 body {
-  background-color: #001220;
-  background-image: 
-    radial-gradient(at 10% 15%, rgba(39, 163, 255, 0.35) 0px, transparent 55%),
-    radial-gradient(at 90% 20%, rgba(67, 174, 71, 0.28) 0px, transparent 50%),
-    radial-gradient(at 50% 85%, rgba(0, 44, 73, 0.8) 0px, transparent 65%),
-    radial-gradient(at 80% 80%, rgba(249, 68, 13, 0.12) 0px, transparent 45%);
+  background-color: var(--rl-bg);
+  background-image: var(--rl-bg-image);
   background-attachment: fixed;
   background-size: cover;
-  color: #ffffff;
+  color: var(--rl-heading);
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Transparent Frosted Glass Cards (rgba(255, 255, 255, 0.05) + backdrop-filter blur(20px)) */
+/* Transparent Frosted Glass Cards */
 .frosted-glass-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--rl-surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 
+  border: 1px solid var(--rl-surface-border);
+  border-top: 1px solid var(--rl-surface-border-top);
+  box-shadow:
     inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
-    0 15px 35px -10px rgba(0, 0, 0, 0.5);
+    var(--rl-surface-shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .frosted-glass-card:hover {
   border-color: rgba(39, 163, 255, 0.35);
-  border-top-color: rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.075);
+  background: var(--rl-surface-hover);
 }
 
 /* Floating Frosted Pill Navbar */
 .frosted-nav-pill {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--rl-nav-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--rl-nav-border);
+  border-top: 1px solid var(--rl-nav-border-top);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Illuminated Glass Pedestal Showcase */
 .glass-pedestal {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--rl-surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 
-    0 25px 50px -15px rgba(0, 0, 0, 0.6),
-    inset 0 0 40px rgba(39, 163, 255, 0.12);
+  border: 1px solid var(--rl-surface-border);
+  border-top: 1px solid var(--rl-surface-border-top);
+  box-shadow:
+    var(--rl-surface-shadow),
+    inset 0 0 40px rgba(39, 163, 255, 0.1);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Mobile nav drawer — solid theme-tinted panel, not a fixed dark color */
+.mobile-menu-panel {
+  background: color-mix(in srgb, var(--rl-bg) 96%, transparent);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
 /* Blend Screen Mode for Logo Assets */
@@ -75,32 +215,32 @@ body {
   filter: contrast(1.15) brightness(1.05);
 }
 
-/* Liquid Glass Buttons */
+/* Liquid Glass Buttons — brand gradient stays fixed across themes */
 .btn-glass-primary {
   background: linear-gradient(135deg, #27a3ff 0%, #0064a3 50%, #43ae47 100%);
   color: #ffffff;
   font-weight: 700;
-  box-shadow: 0 8px 24px -6px rgba(39, 163, 255, 0.45);
+  box-shadow: 0 8px 24px -6px rgba(39, 163, 255, 0.4);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-glass-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 32px -4px rgba(39, 163, 255, 0.65);
-  filter: brightness(1.1);
+  box-shadow: 0 12px 32px -4px rgba(39, 163, 255, 0.6);
+  filter: brightness(1.08);
 }
 
 .btn-glass-secondary {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--rl-btn-secondary-bg);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-  color: #ffffff;
+  border: 1px solid var(--rl-btn-secondary-border);
+  border-top: 1px solid var(--rl-btn-secondary-border-top);
+  color: var(--rl-heading);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-glass-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--rl-btn-secondary-hover);
   border-color: rgba(39, 163, 255, 0.45);
   transform: translateY(-1px);
 }
@@ -110,10 +250,10 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #001220;
+  background: var(--rl-scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #002c49;
+  background: var(--rl-scrollbar-thumb);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {

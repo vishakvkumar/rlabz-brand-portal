@@ -101,19 +101,19 @@ export const LogoSystem = ({ onTriggerToast }) => {
             <Layers className="w-3.5 h-3.5" />
             <span>Official Identity Assets</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
             Official RLabZ Logo Lockups
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-400">
+          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
             Rendered directly from the official attached high-resolution logo assets at prominent size.
           </p>
         </div>
 
         {/* 3 Logo Variation Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          
-          {/* Card 1: Dark Theme Lockup */}
-          <div className="group rounded-3xl overflow-hidden frosted-glass-card border border-white/15 flex flex-col justify-between transition-all hover:border-[#27a3ff]/60">
+
+          {/* Card 1: Dark Theme Lockup — a fixed dark demo surface (not theme-reactive): it exists to show the white-text lockup on a dark background, so it must stay dark in every portal theme. */}
+          <div className="group rounded-3xl overflow-hidden bg-[#03101c] border border-white/15 flex flex-col justify-between transition-all hover:border-[#27a3ff]/60">
             <div className="p-8 h-64 flex flex-col items-center justify-center relative">
               <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/40 text-[11px] font-bold text-cyan-300 uppercase tracking-wider border border-white/10">
                 01. Dark Surface Lockup
@@ -176,8 +176,8 @@ export const LogoSystem = ({ onTriggerToast }) => {
             </div>
           </div>
 
-          {/* Card 3: Standalone Symbol */}
-          <div className="group rounded-3xl overflow-hidden frosted-glass-card border border-white/15 flex flex-col justify-between transition-all hover:border-[#43ae47]/60">
+          {/* Card 3: Standalone Symbol — also a fixed dark demo surface, same reasoning as Card 1. */}
+          <div className="group rounded-3xl overflow-hidden bg-[#03101c] border border-white/15 flex flex-col justify-between transition-all hover:border-[#43ae47]/60">
             <div className="p-8 h-64 flex flex-col items-center justify-center relative">
               <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/40 text-[11px] font-bold text-cyan-300 uppercase tracking-wider border border-white/10">
                 03. Standalone Emblem
@@ -211,17 +211,17 @@ export const LogoSystem = ({ onTriggerToast }) => {
         </div>
 
         {/* Clear Space Visualizer Section */}
-        <div className="rounded-3xl p-8 frosted-glass-card border border-white/15 mb-16 transition-all">
+        <div className="rounded-3xl p-8 frosted-glass-card border border-[var(--rl-surface-border)] mb-16 transition-all">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
             <div>
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-300 mb-1">
                 <Maximize2 className="w-4 h-4" />
                 <span>Exclusion Safety Zone</span>
               </div>
-              <h3 className="text-2xl font-bold text-white">
+              <h3 className="text-2xl font-bold text-[var(--rl-heading)]">
                 Logo Clear Space & Minimum Scale
               </h3>
-              <p className="text-xs sm:text-sm mt-1 text-slate-400">
+              <p className="text-xs sm:text-sm mt-1 text-[var(--rl-muted)]">
                 Maintain clear space around the emblem equal to at least 1.0x height of the capital letter "R".
               </p>
             </div>
@@ -231,7 +231,7 @@ export const LogoSystem = ({ onTriggerToast }) => {
               className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition border ${
                 showClearSpace
                   ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent'
-                  : 'bg-white/10 text-slate-300 border-white/15'
+                  : 'bg-[var(--rl-chip-bg)] text-[var(--rl-muted)] border-[var(--rl-surface-border)]'
               }`}
             >
               <Eye className="w-4 h-4" />
@@ -239,7 +239,7 @@ export const LogoSystem = ({ onTriggerToast }) => {
             </button>
           </div>
 
-          {/* Diagram Container */}
+          {/* Diagram Container — fixed dark backdrop so the white-text dark-variant logo stays legible in every theme */}
           <div className="flex flex-col items-center justify-center p-10 rounded-2xl bg-black/40 border border-white/15 relative overflow-hidden">
             {showClearSpace && (
               <div className="absolute inset-8 border-2 border-dashed border-[#27a3ff]/60 rounded-xl pointer-events-none flex items-center justify-between px-2 py-2">
@@ -271,11 +271,11 @@ export const LogoSystem = ({ onTriggerToast }) => {
             </h3>
             <div className="space-y-4">
               {BRAND_DOS_DONTS.dos.map((item, idx) => (
-                <div key={idx} className="p-4 rounded-2xl border bg-black/30 border-white/10 transition">
-                  <h4 className="text-sm font-bold text-white">
+                <div key={idx} className="p-4 rounded-2xl border bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] transition">
+                  <h4 className="text-sm font-bold text-[var(--rl-heading)]">
                     {idx + 1}. {item.title}
                   </h4>
-                  <p className="text-xs mt-1 leading-relaxed text-slate-400">
+                  <p className="text-xs mt-1 leading-relaxed text-[var(--rl-muted)]">
                     {item.text}
                   </p>
                 </div>
@@ -291,11 +291,11 @@ export const LogoSystem = ({ onTriggerToast }) => {
             </h3>
             <div className="space-y-4">
               {BRAND_DOS_DONTS.donts.map((item, idx) => (
-                <div key={idx} className="p-4 rounded-2xl border bg-black/30 border-white/10 transition">
-                  <h4 className="text-sm font-bold text-white">
+                <div key={idx} className="p-4 rounded-2xl border bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] transition">
+                  <h4 className="text-sm font-bold text-[var(--rl-heading)]">
                     {idx + 1}. {item.title}
                   </h4>
-                  <p className="text-xs mt-1 leading-relaxed text-slate-400">
+                  <p className="text-xs mt-1 leading-relaxed text-[var(--rl-muted)]">
                     {item.text}
                   </p>
                 </div>

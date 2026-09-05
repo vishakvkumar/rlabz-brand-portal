@@ -8,6 +8,24 @@ export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {
   const handleIndividualDownload = (asset) => {
     setDownloadingId(asset.id);
 
+    // Real official template files ship as static assets — download them directly.
+    if (asset.fileUrl) {
+      const link = document.createElement('a');
+      link.href = asset.fileUrl;
+      link.download = asset.fileName || asset.title;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setDownloadingId(null);
+      onTriggerToast({
+        type: 'download',
+        title: 'Download Started',
+        message: `Downloaded ${asset.title} successfully.`,
+      });
+      return;
+    }
+
     setTimeout(() => {
       let content = `RLabZ Asset Package: ${asset.title}\nFormat: ${asset.format}\nSize: ${asset.size}\nDescription: ${asset.description}\n\nThank you for downloading from the RLabZ Brand Identity Hub.`;
       let mimeType = 'text/plain';
@@ -48,16 +66,16 @@ export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {
             <FolderDown className="w-3.5 h-3.5" />
             <span>Downloads & Resources</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
             Brand Assets & Template Repository
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-400">
+          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
             Official design vectors, 4K PNG renders, presentation decks, print specs, and guideline documents.
           </p>
         </div>
 
         {/* Master Zip Callout Card */}
-        <div className="rounded-3xl p-8 sm:p-10 mb-14 glass-pedestal text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <div className="rounded-3xl p-8 sm:p-10 mb-14 glass-pedestal text-[var(--rl-heading)] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
           <div className="space-y-2 max-w-xl z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#43ae47]/20 text-[#43ae47] border border-[#43ae47]/40 text-xs font-bold">
               <Sparkles className="w-3.5 h-3.5" />
@@ -66,7 +84,7 @@ export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {
             <h3 className="text-2xl sm:text-3xl font-extrabold">
               Download Full RLabZ Brand Kit (.ZIP)
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300">
+            <p className="text-xs sm:text-sm text-[var(--rl-muted)]">
               Includes all SVG vector lockups, PNG 4K renders, EPS print files, color palette JSON, slide deck templates, and brand guidelines in a single archive.
             </p>
           </div>
@@ -85,26 +103,33 @@ export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {
           {ASSET_PACKAGES.map((asset) => (
             <div
               key={asset.id}
-              className="rounded-2xl p-6 frosted-glass-card transition-all flex flex-col justify-between"
+              className={`rounded-2xl p-6 frosted-glass-card transition-all flex flex-col justify-between ${asset.real ? 'ring-1 ring-[#43ae47]/30' : ''}`}
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/10 text-cyan-300 text-[11px] font-bold uppercase tracking-wider">
+                  <span className="px-2.5 py-1 rounded-lg bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-cyan-300 text-[11px] font-bold uppercase tracking-wider">
                     {asset.type}
                   </span>
-                  <span className="text-xs font-mono text-slate-400">{asset.size}</span>
+                  <span className="text-xs font-mono text-[var(--rl-muted)]">{asset.size}</span>
                 </div>
 
-                <h4 className="text-lg font-bold text-white">
-                  {asset.title}
-                </h4>
+                <div className="flex items-center gap-2">
+                  <h4 className="text-lg font-bold text-[var(--rl-heading)]">
+                    {asset.title}
+                  </h4>
+                  {asset.real && (
+                    <span className="px-2 py-0.5 rounded-full bg-[#43ae47]/15 text-[#43ae47] text-[9px] font-bold uppercase tracking-wider border border-[#43ae47]/30 shrink-0">
+                      Official File
+                    </span>
+                  )}
+                </div>
 
-                <p className="text-xs mt-2 leading-relaxed text-slate-400">
+                <p className="text-xs mt-2 leading-relaxed text-[var(--rl-muted)]">
                   {asset.description}
                 </p>
 
-                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
-                  <span>Formats: <strong className="text-slate-200">{asset.format}</strong></span>
+                <div className="mt-4 pt-3 border-t border-[var(--rl-surface-border)] flex items-center justify-between text-[11px] text-[var(--rl-muted)]">
+                  <span>Formats: <strong className="text-[var(--rl-body)]">{asset.format}</strong></span>
                   <span>{asset.updated}</span>
                 </div>
               </div>

@@ -30,10 +30,10 @@ export const VoiceSection = ({ onTriggerToast }) => {
             <MessageSquareText className="w-3.5 h-3.5" />
             <span>Verbal Identity</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
             Brand Voice & Tone
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-400">
+          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
             How RLabZ sounds in writing — from decks and proposals to emails and social posts.
           </p>
         </div>
@@ -54,17 +54,17 @@ export const VoiceSection = ({ onTriggerToast }) => {
                   <Icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-white">{pillar.title}</h3>
-                  <p className="text-xs mt-2 leading-relaxed text-slate-400">{pillar.description}</p>
+                  <h3 className="text-base font-bold text-[var(--rl-heading)]">{pillar.title}</h3>
+                  <p className="text-xs mt-2 leading-relaxed text-[var(--rl-muted)]">{pillar.description}</p>
                 </div>
-                <div className="mt-auto pt-4 border-t border-white/10 space-y-2 text-[11px]">
+                <div className="mt-auto pt-4 border-t border-[var(--rl-surface-border)] space-y-2 text-[11px]">
                   <div className="flex items-start gap-1.5 text-[#43ae47]">
                     <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                    <span className="text-slate-300 italic">{pillar.doExample}</span>
+                    <span className="text-[var(--rl-body)] italic">{pillar.doExample}</span>
                   </div>
                   <div className="flex items-start gap-1.5 text-[#f9440d]">
                     <XCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                    <span className="text-slate-500 italic">{pillar.dontExample}</span>
+                    <span className="text-[var(--rl-faint)] italic">{pillar.dontExample}</span>
                   </div>
                 </div>
               </div>
@@ -73,25 +73,25 @@ export const VoiceSection = ({ onTriggerToast }) => {
         </div>
 
         {/* Boilerplate Copy Library */}
-        <div className="rounded-3xl p-8 frosted-glass-card border border-white/15 mb-16">
-          <h3 className="text-xl font-bold text-white mb-1">Approved Boilerplate Copy</h3>
-          <p className="text-xs sm:text-sm text-slate-400 mb-6">
+        <div className="rounded-3xl p-8 frosted-glass-card border border-[var(--rl-surface-border)] mb-16">
+          <h3 className="text-xl font-bold text-[var(--rl-heading)] mb-1">Approved Boilerplate Copy</h3>
+          <p className="text-xs sm:text-sm text-[var(--rl-muted)] mb-6">
             Pre-written, legal-safe descriptions of RLabZ. Copy the version that fits your context.
           </p>
           <div className="space-y-4">
             {BOILERPLATE_COPY.map((item) => (
               <div
                 key={item.label}
-                className="p-5 rounded-2xl bg-black/30 border border-white/10 flex flex-col md:flex-row md:items-start justify-between gap-4"
+                className="p-5 rounded-2xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] flex flex-col md:flex-row md:items-start justify-between gap-4"
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="px-2 py-0.5 rounded-full bg-[#27a3ff]/15 text-[#27a3ff] text-[10px] font-bold uppercase tracking-wider">
                       {item.label}
                     </span>
-                    <span className="text-[11px] text-slate-500">{item.useCase}</span>
+                    <span className="text-[11px] text-[var(--rl-faint)]">{item.useCase}</span>
                   </div>
-                  <p className="text-sm text-slate-200 leading-relaxed">{item.text}</p>
+                  <p className="text-sm text-[var(--rl-body)] leading-relaxed">{item.text}</p>
                 </div>
                 <button
                   onClick={() => handleCopyText(item.text, item.label)}
@@ -114,9 +114,9 @@ export const VoiceSection = ({ onTriggerToast }) => {
             </h3>
             <div className="space-y-4">
               {VOICE_DOS_DONTS.dos.map((item, idx) => (
-                <div key={idx} className="p-4 rounded-2xl border bg-black/30 border-white/10">
-                  <h4 className="text-sm font-bold text-white">{idx + 1}. {item.title}</h4>
-                  <p className="text-xs mt-1 leading-relaxed text-slate-400">{item.text}</p>
+                <div key={idx} className="p-4 rounded-2xl border bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)]">
+                  <h4 className="text-sm font-bold text-[var(--rl-heading)]">{idx + 1}. {item.title}</h4>
+                  <p className="text-xs mt-1 leading-relaxed text-[var(--rl-muted)]">{item.text}</p>
                 </div>
               ))}
             </div>
@@ -129,9 +129,9 @@ export const VoiceSection = ({ onTriggerToast }) => {
             </h3>
             <div className="space-y-4">
               {VOICE_DOS_DONTS.donts.map((item, idx) => (
-                <div key={idx} className="p-4 rounded-2xl border bg-black/30 border-white/10">
-                  <h4 className="text-sm font-bold text-white">{idx + 1}. {item.title}</h4>
-                  <p className="text-xs mt-1 leading-relaxed text-slate-400">{item.text}</p>
+                <div key={idx} className="p-4 rounded-2xl border bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)]">
+                  <h4 className="text-sm font-bold text-[var(--rl-heading)]">{idx + 1}. {item.title}</h4>
+                  <p className="text-xs mt-1 leading-relaxed text-[var(--rl-muted)]">{item.text}</p>
                 </div>
               ))}
             </div>

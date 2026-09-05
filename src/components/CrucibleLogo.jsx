@@ -2,6 +2,7 @@ import React from 'react';
 import logoDark from '../assets/logo-dark.png';
 import logoLight from '../assets/logo-light.png';
 import logoSymbol from '../assets/logo-symbol.png';
+import { useTheme } from '../context/ThemeContext';
 
 /**
  * CrucibleMark component rendering the standalone 3D emblem mark image
@@ -28,17 +29,26 @@ export const CrucibleMark = ({ size = 64, className = '' }) => {
 /**
  * CrucibleLogo lockup component rendering the exact attached logo image directly
  * Big, bold, un-altered, and 100% authentic to the provided brand file!
+ *
+ * variant="auto" picks the correct lockup for the current portal theme (light
+ * text on the "navy"/"midnight" dark themes, navy text on the "paper" light
+ * theme) — use this in shared chrome (nav, footer, narrative). Explicit
+ * "dark"/"light" values stay fixed regardless of theme — use those when a
+ * component is demonstrating a specific lockup or a literal print mockup.
  */
 export const CrucibleLogo = ({
   variant = 'dark',
   size = 56,
   className = '',
 }) => {
-  if (variant === 'symbol') {
+  const { theme } = useTheme();
+  const resolvedVariant = variant === 'auto' ? (theme === 'paper' ? 'light' : 'dark') : variant;
+
+  if (resolvedVariant === 'symbol') {
     return <CrucibleMark size={size} className={className} />;
   }
 
-  const logoImg = variant === 'dark' ? logoDark : logoLight;
+  const logoImg = resolvedVariant === 'dark' ? logoDark : logoLight;
   const pixelHeight = typeof size === 'number' ? `${size}px` : size;
 
   return (

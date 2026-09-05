@@ -17,10 +17,10 @@ export const CollateralShowcase = () => {
             <Presentation className="w-3.5 h-3.5" />
             <span>Applications & Brand in Practice</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
             Collateral & UI Mockups
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-400">
+          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
             Real-world enterprise applications of the RLabZ visual identity system.
           </p>
         </div>
@@ -32,7 +32,7 @@ export const CollateralShowcase = () => {
             className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all border ${
               activeTab === 'business-card'
                 ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent shadow-lg'
-                : 'bg-white/[0.04] border-white/10 text-slate-300 hover:bg-white/10'
+                : 'bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] text-[var(--rl-muted)] hover:bg-[var(--rl-surface-hover)]'
             }`}
           >
             <CreditCard className="w-4 h-4" />
@@ -44,7 +44,7 @@ export const CollateralShowcase = () => {
             className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all border ${
               activeTab === 'id-badge'
                 ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent shadow-lg'
-                : 'bg-white/[0.04] border-white/10 text-slate-300 hover:bg-white/10'
+                : 'bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] text-[var(--rl-muted)] hover:bg-[var(--rl-surface-hover)]'
             }`}
           >
             <BadgeCheck className="w-4 h-4" />
@@ -56,7 +56,7 @@ export const CollateralShowcase = () => {
             className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all border ${
               activeTab === 'slide-deck'
                 ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent shadow-lg'
-                : 'bg-white/[0.04] border-white/10 text-slate-300 hover:bg-white/10'
+                : 'bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] text-[var(--rl-muted)] hover:bg-[var(--rl-surface-hover)]'
             }`}
           >
             <Presentation className="w-4 h-4" />
@@ -68,7 +68,7 @@ export const CollateralShowcase = () => {
             className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all border ${
               activeTab === 'email-signature'
                 ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent shadow-lg'
-                : 'bg-white/[0.04] border-white/10 text-slate-300 hover:bg-white/10'
+                : 'bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] text-[var(--rl-muted)] hover:bg-[var(--rl-surface-hover)]'
             }`}
           >
             <Mail className="w-4 h-4" />
@@ -156,14 +156,15 @@ export const CollateralShowcase = () => {
                 </div>
               </div>
             </div>
-            <p className="text-xs text-slate-400">Click card or button to toggle front / back view.</p>
+            <p className="text-xs text-[var(--rl-muted)]">Click card or button to toggle front / back view.</p>
           </div>
         )}
 
         {/* TAB 2: Employee ID Badge Preview */}
         {activeTab === 'id-badge' && (
           <div className="flex flex-col items-center justify-center space-y-4">
-            <div className="relative w-72 rounded-3xl frosted-glass-card p-6 shadow-2xl text-white flex flex-col items-center">
+            {/* Fixed dark badge surface — depicts a literal printed ID badge, not portal chrome */}
+            <div className="relative w-72 rounded-3xl bg-[#03101c] border border-white/12 p-6 shadow-2xl text-white flex flex-col items-center">
               {/* Translucent Lanyard Overlay */}
               <div className="w-12 h-3.5 rounded-full bg-white/10 border border-white/20 mb-6 flex items-center justify-center">
                 <div className="w-6 h-1 rounded-full bg-cyan-400/60" />
@@ -209,7 +210,7 @@ export const CollateralShowcase = () => {
         {activeTab === 'slide-deck' && (
           <div className="flex flex-col items-center space-y-4">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-slate-400 mr-2">Slide Layout:</span>
+              <span className="text-xs font-bold text-[var(--rl-muted)] mr-2">Slide Layout:</span>
               {[1, 2, 3].map((num) => (
                 <button
                   key={num}
@@ -217,7 +218,7 @@ export const CollateralShowcase = () => {
                   className={`px-3.5 py-1 rounded-full text-xs font-bold transition ${
                     activeSlide === num
                       ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white'
-                      : 'bg-white/[0.04] text-slate-300 hover:bg-white/10'
+                      : 'bg-[var(--rl-chip-bg)] text-[var(--rl-muted)] hover:bg-[var(--rl-surface-hover)]'
                   }`}
                 >
                   Slide {num}
@@ -225,7 +226,8 @@ export const CollateralShowcase = () => {
               ))}
             </div>
 
-            <div className="w-full max-w-4xl aspect-video rounded-3xl frosted-glass-card p-8 sm:p-12 flex flex-col justify-between text-white relative overflow-hidden">
+            {/* Fixed dark navy slide surface — depicts a literal dark title slide from the official deck, not portal chrome */}
+            <div className="w-full max-w-4xl aspect-video rounded-3xl bg-[#03101c] border border-white/12 p-8 sm:p-12 flex flex-col justify-between text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 opacity-15 pointer-events-none">
                 <CrucibleMark size={400} />
               </div>

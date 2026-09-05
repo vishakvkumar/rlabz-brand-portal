@@ -5,6 +5,7 @@ import confetti from 'canvas-confetti';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
+import { ThemeProvider } from './context/ThemeContext';
 
 import HomePage from './pages/HomePage';
 import LogosPage from './pages/LogosPage';
@@ -25,12 +26,6 @@ function ScrollToTop() {
 
 export function AppContent() {
   const [toast, setToast] = useState(null);
-
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-    document.body.style.backgroundColor = '#001220';
-    document.body.style.color = '#ffffff';
-  }, []);
 
   const triggerToast = (toastData) => {
     setToast(toastData);
@@ -132,6 +127,21 @@ export function AppContent() {
 For questions, contact brand@rlabz.com`;
       zip.file('RLabZ-Brand-Guidelines-2026.txt', guidelinesText);
 
+      // 4. Add official real template files (Presentation, Letterhead, Email Signature)
+      const templatesFolder = zip.folder('Templates');
+      const officialFiles = [
+        { url: '/toolkit/RLabZ-Default-Presentation-Template.pptx', name: 'RLabZ-Default-Presentation-Template.pptx' },
+        { url: '/toolkit/RLabZ-Letterhead-Template.docx', name: 'RLabZ-Letterhead-Template.docx' },
+        { url: '/toolkit/RLabZ-Email-Signature.html', name: 'RLabZ-Email-Signature.html' },
+      ];
+      await Promise.all(
+        officialFiles.map(async (file) => {
+          const res = await fetch(file.url);
+          const buffer = await res.arrayBuffer();
+          templatesFolder.file(file.name, buffer);
+        })
+      );
+
       // Generate Zip Blob
       const blob = await zip.generateAsync({ type: 'blob' });
       const url = URL.createObjectURL(blob);
@@ -167,20 +177,7 @@ For questions, contact brand@rlabz.com`;
   };
 
   return (
-    <div
-      className="relative min-h-screen text-white overflow-x-hidden selection:bg-[#27a3ff] selection:text-white flex flex-col justify-between font-sans antialiased"
-      style={{
-        backgroundColor: "#001220",
-        backgroundImage: `
-          radial-gradient(at 10% 15%, rgba(39, 163, 255, 0.35) 0px, transparent 55%),
-          radial-gradient(at 90% 20%, rgba(67, 174, 71, 0.28) 0px, transparent 50%),
-          radial-gradient(at 50% 85%, rgba(0, 44, 73, 0.8) 0px, transparent 65%),
-          radial-gradient(at 80% 80%, rgba(249, 68, 13, 0.12) 0px, transparent 45%)
-        `,
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover"
-      }}
-    >
+    <div className="relative min-h-screen text-[var(--rl-heading)] overflow-x-hidden selection:bg-[#27a3ff] selection:text-white flex flex-col justify-between font-sans antialiased">
       <ScrollToTop />
 
       {/* Page Content Container */}
@@ -214,9 +211,11 @@ For questions, contact brand@rlabz.com`;
 
 export function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </ThemeProvider>
   );
 }
 
