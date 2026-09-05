@@ -21,6 +21,7 @@ export const Footer = () => {
             <Link to="/logos" className="hover:text-[#27a3ff] transition">Logos</Link>
             <Link to="/colors" className="hover:text-[#27a3ff] transition">Colors</Link>
             <Link to="/typography" className="hover:text-[#27a3ff] transition">Typography</Link>
+            <Link to="/voice" className="hover:text-[#27a3ff] transition">Voice</Link>
             <Link to="/mockups" className="hover:text-[#27a3ff] transition">Mockups</Link>
             <Link to="/downloads" className="hover:text-[#27a3ff] transition">Downloads</Link>
           </div>

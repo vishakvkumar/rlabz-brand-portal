@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, FileText, CheckCircle2, Archive, Sparkles, FolderDown, ShieldCheck } from 'lucide-react';
+import { Download, Sparkles, FolderDown } from 'lucide-react';
 import { ASSET_PACKAGES } from '../data/brandData';
 
 export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {

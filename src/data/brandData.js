@@ -181,6 +181,74 @@ export const BRAND_DOS_DONTS = {
   ],
 };
 
+export const VOICE_PILLARS = [
+  {
+    title: 'Confident',
+    iconName: 'Flame',
+    color: '#f9440d',
+    description: 'We speak from proven experience, not theory. Every claim is backed by a real client outcome or a shipped project.',
+    doExample: '"Our trainees rebuilt this checkout flow for a live client in 3 weeks."',
+    dontExample: '"We believe our training could probably help you build things."',
+  },
+  {
+    title: 'Grounded',
+    iconName: 'ShieldCheck',
+    color: '#002c49',
+    description: 'No hype, no buzzword soup. We explain what we do in plain, precise language a non-technical reader can follow.',
+    doExample: '"We pair every learner with a real client project."',
+    dontExample: '"We leverage synergistic paradigms to disrupt the edtech space."',
+  },
+  {
+    title: 'Encouraging',
+    iconName: 'GraduationCap',
+    color: '#43ae47',
+    description: 'We talk to people mid-transformation. The tone respects the pressure they are under and champions their progress.',
+    doExample: '"You shipped production code in week one — that\'s the crucible working."',
+    dontExample: '"Most people fail at this stage, so don\'t worry if you do too."',
+  },
+  {
+    title: 'Precise',
+    iconName: 'Cpu',
+    color: '#27a3ff',
+    description: 'Technical claims are specific and verifiable — exact numbers, exact tools, exact outcomes. No vague superlatives.',
+    doExample: '"95%+ of graduates are job-ready within 12 weeks."',
+    dontExample: '"We have amazing results and a huge success rate."',
+  },
+];
+
+export const BOILERPLATE_COPY = [
+  {
+    label: 'One-Liner',
+    useCase: 'Email signatures, social bios, badge taglines',
+    text: 'RLabZ — Design | Development | Training. Transforming ideas into intelligent solutions.',
+  },
+  {
+    label: 'Short Boilerplate',
+    useCase: 'Slide decks, partner intros, press mentions',
+    text: 'RLabZ is a design, development, and training studio that puts learners through real client projects — not simulations — until they come out job-ready.',
+  },
+  {
+    label: 'Long Boilerplate',
+    useCase: 'About pages, proposals, investor materials',
+    text: 'RLabZ is a design, development, and training studio built on a simple metaphor: the crucible. Just as raw material is subjected to real heat and pressure until it transforms, RLabZ puts students through live client projects — not simulations — until they emerge job-ready. Our four-blade emblem represents this transformation across our three practice areas: Design, Development, and Training, unified by one outcome — real-world readiness.',
+  },
+];
+
+export const VOICE_DOS_DONTS = {
+  dos: [
+    { title: 'Lead With Outcomes', text: 'Open with what was built, learned, or shipped before explaining how.' },
+    { title: 'Use Active Voice', text: '"We shipped the feature" beats "The feature was shipped by our team."' },
+    { title: 'Name Real Numbers', text: 'Cite specific metrics (95%, 12 weeks, 3 blades) rather than vague claims of scale.' },
+    { title: 'Write for a Skimmer', text: 'Front-load the key point in the first sentence of every paragraph or slide.' },
+  ],
+  donts: [
+    { title: 'Do Not Use Filler Buzzwords', text: 'Avoid "synergy," "disrupt," "leverage," and similar jargon with no concrete meaning.' },
+    { title: 'Do Not Overpromise', text: 'Never state guarantees ("guaranteed job placement") the organization cannot stand behind.' },
+    { title: 'Do Not Talk Down', text: 'Avoid condescending framing toward learners who are still mid-transformation.' },
+    { title: 'Do Not Mix Tone Within a Doc', text: 'Keep one voice throughout a single deck, page, or email — don\'t swing from casual to corporate.' },
+  ],
+};
+
 export const ASSET_PACKAGES = [
   {
     id: 'logo-kit-vector',

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowDown, Download, Sparkles } from 'lucide-react';
 import logoSymbolAsset from '../assets/logo-symbol.png';
 
@@ -44,13 +45,13 @@ export const Hero = ({ onDownloadBrandKit }) => {
                 <span>Download Master Brand Kit</span>
               </button>
 
-              <a
-                href="#logos"
+              <Link
+                to="/logos"
                 className="btn-glass-secondary flex items-center gap-2 px-6 py-3.5 rounded-full text-xs font-semibold"
               >
                 <span>Explore Logo System</span>
-                <ArrowDown className="w-4 h-4 text-[#27a3ff]" />
-              </a>
+                <ArrowDown className="w-4 h-4 text-[#27a3ff] -rotate-90" />
+              </Link>
             </div>
 
             {/* Quick Stats Grid */}

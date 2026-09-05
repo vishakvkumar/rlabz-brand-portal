@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Type, Sparkles, Sliders } from 'lucide-react';
+import { Type, Sliders } from 'lucide-react';
 import { TYPOGRAPHY_SCALES } from '../data/brandData';
 
 export const TypographySection = () => {

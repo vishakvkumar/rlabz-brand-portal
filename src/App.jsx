@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage';
 import LogosPage from './pages/LogosPage';
 import ColorsPage from './pages/ColorsPage';
 import TypographyPage from './pages/TypographyPage';
+import VoicePage from './pages/VoicePage';
 import MockupsPage from './pages/MockupsPage';
 import DownloadsPage from './pages/DownloadsPage';
 
@@ -194,6 +195,7 @@ For questions, contact brand@rlabz.com`;
             <Route path="/logos" element={<LogosPage onTriggerToast={triggerToast} />} />
             <Route path="/colors" element={<ColorsPage onTriggerToast={triggerToast} />} />
             <Route path="/typography" element={<TypographyPage />} />
+            <Route path="/voice" element={<VoicePage onTriggerToast={triggerToast} />} />
             <Route path="/mockups" element={<MockupsPage />} />
             <Route path="/downloads" element={<DownloadsPage onDownloadBrandKit={handleDownloadBrandKit} onTriggerToast={triggerToast} />} />
             <Route path="*" element={<HomePage onDownloadBrandKit={handleDownloadBrandKit} />} />

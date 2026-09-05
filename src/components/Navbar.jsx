@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Download, Menu, X } from 'lucide-react';
 import CrucibleLogo from './CrucibleLogo';
 
 export const Navbar = ({ onDownloadBrandKit }) => {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navLinks = [
     { name: 'Story', path: '/' },
     { name: 'Logos', path: '/logos' },
     { name: 'Palette', path: '/colors' },
     { name: 'Typography', path: '/typography' },
+    { name: 'Voice', path: '/voice' },
     { name: 'Collateral', path: '/mockups' },
     { name: 'Assets', path: '/downloads' },
   ];
