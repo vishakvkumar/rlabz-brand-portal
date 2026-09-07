@@ -32,7 +32,7 @@ export const CrucibleMark = ({ size = 48, className = '' }) => {
  */
 export const CrucibleLogo = ({
   variant = 'dark',
-  size = 48,
+  size = 56,
   className = '',
 }) => {
   const { theme } = useTheme();
@@ -53,7 +53,7 @@ export const CrucibleLogo = ({
         style={{
           height: pixelHeight,
           width: 'auto',
-          minHeight: '38px'
+          minHeight: '44px'
         }}
         className="object-contain filter drop-shadow-md transition-transform duration-300 hover:scale-[1.03]"
       />
