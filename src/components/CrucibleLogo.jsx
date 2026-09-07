@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 /**
  * CrucibleMark component rendering the standalone 3D emblem mark image
  */
-export const CrucibleMark = ({ size = 64, className = '' }) => {
+export const CrucibleMark = ({ size = 72, className = '' }) => {
   const pixelSize = typeof size === 'number' ? `${size}px` : size;
 
   return (
@@ -29,16 +29,10 @@ export const CrucibleMark = ({ size = 64, className = '' }) => {
 /**
  * CrucibleLogo lockup component rendering the exact attached logo image directly
  * Big, bold, un-altered, and 100% authentic to the provided brand file!
- *
- * variant="auto" picks the correct lockup for the current portal theme (light
- * text on the "navy"/"midnight" dark themes, navy text on the "paper" light
- * theme) — use this in shared chrome (nav, footer, narrative). Explicit
- * "dark"/"light" values stay fixed regardless of theme — use those when a
- * component is demonstrating a specific lockup or a literal print mockup.
  */
 export const CrucibleLogo = ({
   variant = 'dark',
-  size = 56,
+  size = 68,
   className = '',
 }) => {
   const { theme } = useTheme();
@@ -59,7 +53,7 @@ export const CrucibleLogo = ({
         style={{
           height: pixelHeight,
           width: 'auto',
-          minHeight: '44px'
+          minHeight: '56px'
         }}
         className="object-contain filter drop-shadow-md transition-transform duration-300 hover:scale-[1.03]"
       />

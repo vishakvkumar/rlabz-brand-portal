@@ -23,9 +23,9 @@ export const Navbar = ({ onDownloadBrandKit }) => {
         {/* Floating Pill Nav Container */}
         <div className="w-full flex items-center justify-between px-6 py-3.5 rounded-full frosted-nav-pill">
 
-          {/* Exact Attached Brand Logo Image - Big & Prominent */}
+          {/* Exact Attached Brand Logo Image - Larger & Highly Readable */}
           <Link to="/" className="group flex items-center gap-3 shrink-0 py-1">
-            <CrucibleLogo variant="auto" size={58} />
+            <CrucibleLogo variant="auto" size={72} />
           </Link>
 
           {/* Desktop Navigation Links */}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CrucibleLogo from './CrucibleLogo';
-import { ShieldCheck } from 'lucide-react';
 
 export const Footer = () => {
   return (
@@ -10,7 +9,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-[var(--rl-surface-border)]">
 
           <div className="md:col-span-6 flex flex-col items-start gap-3">
-            <CrucibleLogo variant="auto" size={40} />
+            <CrucibleLogo variant="auto" size={56} />
             <p className="text-xs text-[var(--rl-muted)] max-w-md">
               Official internal Design System & Brand Identity Portal for RLabZ Design | Development | Training.
             </p>
@@ -30,10 +29,6 @@ export const Footer = () => {
 
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--rl-muted)]">
           <span>&copy; {new Date().getFullYear()} RLabZ Inc. All rights reserved. Internal Brand Portal.</span>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#43ae47]" />
-            <span>Enterprise Security Approved</span>
-          </div>
         </div>
       </div>
     </footer>
