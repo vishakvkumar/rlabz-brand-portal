@@ -9,7 +9,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-[var(--rl-surface-border)]">
 
           <div className="md:col-span-6 flex flex-col items-start gap-3">
-            <CrucibleLogo variant="auto" size={104} />
+            <CrucibleLogo variant="auto" size={56} />
             <p className="text-xs text-[var(--rl-muted)] max-w-md">
               Official internal Design System &amp; Brand Identity Portal for RLabZ Design | Development | Training.
             </p>

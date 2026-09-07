@@ -36,9 +36,9 @@ export const BrandNarrative = () => {
                 A crucible is a vessel where raw material is subjected to real heat and pressure and comes out transformed. That’s a precise metaphor for what RLabZ actually does: it takes students and puts them through live client projects—not simulations—until they come out job-ready. It also quietly nods to ‘lab’ without being a literal beaker icon.
               </blockquote>
 
-              {/* Official Attached RLabZ Logo Lockup — Jumbo Size for Clear Captions */}
+              {/* Official Attached RLabZ Logo Lockup — Balanced Sizing */}
               <div className="pt-2">
-                <CrucibleLogo variant="dark" size={104} />
+                <CrucibleLogo variant="dark" size={54} />
               </div>
             </div>
 
