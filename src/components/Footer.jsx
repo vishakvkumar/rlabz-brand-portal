@@ -9,9 +9,9 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-[var(--rl-surface-border)]">
 
           <div className="md:col-span-6 flex flex-col items-start gap-3">
-            <CrucibleLogo variant="auto" size={56} />
+            <CrucibleLogo variant="auto" size={104} />
             <p className="text-xs text-[var(--rl-muted)] max-w-md">
-              Official internal Design System & Brand Identity Portal for RLabZ Design | Development | Training.
+              Official internal Design System &amp; Brand Identity Portal for RLabZ Design | Development | Training.
             </p>
           </div>
 
@@ -21,7 +21,6 @@ export const Footer = () => {
             <Link to="/colors" className="hover:text-[#27a3ff] transition">Colors</Link>
             <Link to="/typography" className="hover:text-[#27a3ff] transition">Typography</Link>
             <Link to="/voice" className="hover:text-[#27a3ff] transition">Voice</Link>
-            <Link to="/mockups" className="hover:text-[#27a3ff] transition">Mockups</Link>
             <Link to="/downloads" className="hover:text-[#27a3ff] transition">Downloads</Link>
           </div>
 

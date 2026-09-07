@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 /**
  * CrucibleMark component rendering the standalone 3D emblem mark image
  */
-export const CrucibleMark = ({ size = 72, className = '' }) => {
+export const CrucibleMark = ({ size = 110, className = '' }) => {
   const pixelSize = typeof size === 'number' ? `${size}px` : size;
 
   return (
@@ -28,11 +28,11 @@ export const CrucibleMark = ({ size = 72, className = '' }) => {
 
 /**
  * CrucibleLogo lockup component rendering the exact attached logo image directly
- * Big, bold, un-altered, and 100% authentic to the provided brand file!
+ * Extra large, bold, un-altered, and 100% authentic to the provided brand file!
  */
 export const CrucibleLogo = ({
   variant = 'dark',
-  size = 68,
+  size = 110,
   className = '',
 }) => {
   const { theme } = useTheme();
@@ -53,7 +53,7 @@ export const CrucibleLogo = ({
         style={{
           height: pixelHeight,
           width: 'auto',
-          minHeight: '56px'
+          minHeight: '88px'
         }}
         className="object-contain filter drop-shadow-md transition-transform duration-300 hover:scale-[1.03]"
       />

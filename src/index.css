@@ -3,6 +3,19 @@
 
 /*
   ------------------------------------------------------------------------
+  RLabZ Brand Typeface: Coolvetica
+  ------------------------------------------------------------------------
+*/
+@font-face {
+  font-family: 'Coolvetica';
+  src: local('Coolvetica'), local('Coolvetica Rg'), local('Coolvetica-Regular');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+  ------------------------------------------------------------------------
   RLabZ Brand Theme System — Corporate Navy (Fixed Theme)
   ------------------------------------------------------------------------
   Corporate Navy is the single fixed visual theme for the entire portal:
@@ -57,9 +70,13 @@
 
 html {
   scroll-behavior: smooth;
-  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-family: 'Coolvetica', 'Plus Jakarta Sans', 'Inter', sans-serif;
   background-color: var(--rl-bg);
   color: var(--rl-heading);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Coolvetica', 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
 
 /* Corporate Navy Canvas Mesh */

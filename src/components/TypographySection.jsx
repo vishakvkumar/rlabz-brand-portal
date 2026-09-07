@@ -19,7 +19,7 @@ export const TypographySection = () => {
             Type Hierarchy & Font Specs
           </h2>
           <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
-            Primary Typeface: <strong>Plus Jakarta Sans</strong> paired with <strong>Inter</strong> for UI components.
+            Primary Brand Typeface: <strong>Coolvetica</strong> paired with <strong>Plus Jakarta Sans</strong> &amp; <strong>Inter</strong> for UI components.
           </p>
         </div>
 
@@ -31,11 +31,11 @@ export const TypographySection = () => {
               <span className="text-xs font-bold uppercase tracking-widest text-[#f9440d]">
                 Primary Brand Typeface
               </span>
-              <h3 className="text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
-                Plus Jakarta Sans
+              <h3 className="text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]" style={{ fontFamily: "'Coolvetica', 'Plus Jakarta Sans', sans-serif" }}>
+                Coolvetica
               </h3>
               <p className="text-sm leading-relaxed text-[var(--rl-muted)]">
-                A modern sans-serif designed for high legibility, clean geometric proportions, and enterprise authority. Used across digital portals, marketing banners, and print collateral.
+                The primary display and heading font used across all official RLabZ documents, presentation decks, letterheads, and digital portals. Known for its distinct tight letterforms and strong corporate authority.
               </p>
               <div className="flex flex-wrap gap-2 pt-2">
                 <span className="px-3 py-1 rounded-lg bg-[var(--rl-chip-bg)] text-[var(--rl-body)] text-xs font-semibold border border-[var(--rl-surface-border)]">
@@ -44,24 +44,21 @@ export const TypographySection = () => {
                 <span className="px-3 py-1 rounded-lg bg-[var(--rl-chip-bg)] text-[var(--rl-body)] text-xs font-semibold border border-[var(--rl-surface-border)]">
                   Medium 500
                 </span>
-                <span className="px-3 py-1 rounded-lg bg-[var(--rl-chip-bg)] text-[var(--rl-body)] text-xs font-semibold border border-[var(--rl-surface-border)]">
-                  SemiBold 600
-                </span>
                 <span className="px-3 py-1 rounded-lg bg-[#27a3ff]/20 text-[#27a3ff] text-xs font-bold border border-[#27a3ff]/40">
                   Bold 700
                 </span>
                 <span className="px-3 py-1 rounded-lg bg-[#f9440d]/20 text-[#f9440d] text-xs font-extrabold border border-[#f9440d]/40">
-                  ExtraBold 800
+                  Heavy 800
                 </span>
               </div>
             </div>
 
-            {/* Interactive Type Tester Input — fixed Navy card, on-brand & legible regardless of portal theme */}
+            {/* Interactive Type Tester Input */}
             <div className="md:col-span-6 rounded-2xl p-6 bg-[#002c49] border border-slate-700 text-white flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold uppercase tracking-wider text-[#27a3ff] flex items-center gap-1.5">
                   <Sliders className="w-3.5 h-3.5" />
-                  Live Type Tester
+                  Live Coolvetica Type Tester
                 </label>
                 <span className="text-[10px] text-slate-400">Type custom text below</span>
               </div>
@@ -70,8 +67,14 @@ export const TypographySection = () => {
                 value={sampleText}
                 onChange={(e) => setSampleText(e.target.value)}
                 placeholder="Type sample text here..."
-                className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm focus:outline-none focus:border-[#27a3ff] transition"
+                className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm focus:outline-none focus:border-[#27a3ff] transition font-sans"
               />
+              <div
+                className="text-2xl font-bold tracking-tight text-white py-2"
+                style={{ fontFamily: "'Coolvetica', 'Plus Jakarta Sans', sans-serif" }}
+              >
+                {sampleText || 'RLabZ Brand Identity'}
+              </div>
               <div className="text-xs text-slate-400 flex justify-between">
                 <span>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</span>
               </div>
@@ -83,7 +86,7 @@ export const TypographySection = () => {
         {/* Type Hierarchy Scale Listing */}
         <div className="rounded-3xl p-8 frosted-glass-card">
           <h3 className="text-xl font-bold mb-6 text-[var(--rl-heading)]">
-            Type Scale Hierarchy
+            Type Scale Hierarchy (Coolvetica)
           </h3>
 
           <div className="space-y-6">
@@ -109,8 +112,9 @@ export const TypographySection = () => {
 
                 {/* Rendered Sample */}
                 <div
-                  className="overflow-x-auto py-2 font-sans tracking-tight text-[var(--rl-heading)]"
+                  className="overflow-x-auto py-2 tracking-tight text-[var(--rl-heading)]"
                   style={{
+                    fontFamily: "'Coolvetica', 'Plus Jakarta Sans', sans-serif",
                     fontSize: scale.size.split(' / ')[0],
                     fontWeight: scale.weight.includes('800') ? 800 : scale.weight.includes('700') ? 700 : scale.weight.includes('600') ? 600 : 400,
                   }}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import JSZip from 'jszip';
 import confetti from 'canvas-confetti';
@@ -12,13 +12,12 @@ import LogosPage from './pages/LogosPage';
 import ColorsPage from './pages/ColorsPage';
 import TypographyPage from './pages/TypographyPage';
 import VoicePage from './pages/VoicePage';
-import MockupsPage from './pages/MockupsPage';
 import DownloadsPage from './pages/DownloadsPage';
 
 // Scroll to top automatically on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => {
+  React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return null;
@@ -133,6 +132,7 @@ For questions, contact brand@rlabz.com`;
         { url: '/toolkit/RLabZ-Default-Presentation-Template.pptx', name: 'RLabZ-Default-Presentation-Template.pptx' },
         { url: '/toolkit/RLabZ-Letterhead-Template.docx', name: 'RLabZ-Letterhead-Template.docx' },
         { url: '/toolkit/RLabZ-Email-Signature.html', name: 'RLabZ-Email-Signature.html' },
+        { url: '/toolkit/RLabZ-RCSS-Email-Signature.html', name: 'RLabZ-RCSS-Email-Signature.html' },
       ];
       await Promise.all(
         officialFiles.map(async (file) => {
@@ -193,7 +193,6 @@ For questions, contact brand@rlabz.com`;
             <Route path="/colors" element={<ColorsPage onTriggerToast={triggerToast} />} />
             <Route path="/typography" element={<TypographyPage />} />
             <Route path="/voice" element={<VoicePage onTriggerToast={triggerToast} />} />
-            <Route path="/mockups" element={<MockupsPage />} />
             <Route path="/downloads" element={<DownloadsPage onDownloadBrandKit={handleDownloadBrandKit} onTriggerToast={triggerToast} />} />
             <Route path="*" element={<HomePage onDownloadBrandKit={handleDownloadBrandKit} />} />
           </Routes>
