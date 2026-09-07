@@ -3,20 +3,13 @@
 
 /*
   ------------------------------------------------------------------------
-  RLabZ Theme Tokens
+  RLabZ Brand Theme System — Corporate Navy (Fixed Theme)
   ------------------------------------------------------------------------
-  The 4 brand colors (Navy #002c49, Cyan #27a3ff, Green #43ae47,
-  Flame #f9440d) are fixed per brand guidelines and never change between
-  themes — only the portal's own chrome (backgrounds, surfaces, and text
-  roles) varies. Three themes are offered:
-
-  "navy"     (default) — refined corporate dark, mirrors the official
-              deck's dark navy slides. Single-tone canvas, no neon glow.
-  "paper"    — true light mode, mirrors the letterhead / light deck
-              slides / email signature: white & Cloud Blue surfaces,
-              Charcoal & Slate Text copy.
-  "midnight" — a quieter alternate dark mood: near-black navy canvas,
-              lower-contrast glow, green-forward secondary emphasis.
+  Corporate Navy is the single fixed visual theme for the entire portal:
+  - Deep Navy #002c49 / #001526 canvas
+  - Electric Cyan #27a3ff tech accents & glows
+  - Growth Green #43ae47 transformation accents
+  - Crucible Flame #f9440d micro-accents
   ------------------------------------------------------------------------
 */
 
@@ -62,86 +55,6 @@
   color-scheme: dark;
 }
 
-[data-theme="paper"] {
-  --color-navy: #002c49;
-  --color-flame: #f9440d;
-  --color-cyan: #27a3ff;
-  --color-green: #43ae47;
-
-  --rl-bg: #f5f7fa;
-  --rl-bg-image:
-    radial-gradient(at 10% 0%, rgba(39, 163, 255, 0.06) 0px, transparent 50%),
-    radial-gradient(at 90% 100%, rgba(67, 174, 71, 0.05) 0px, transparent 50%);
-
-  --rl-heading: #002c49;
-  --rl-body: #3e4b55;
-  --rl-muted: #6b7a87;
-  --rl-faint: #8fa9bc;
-
-  --rl-surface: rgba(255, 255, 255, 0.75);
-  --rl-surface-hover: rgba(255, 255, 255, 0.92);
-  --rl-surface-border: rgba(0, 44, 73, 0.1);
-  --rl-surface-border-top: rgba(255, 255, 255, 0.9);
-  --rl-surface-shadow: 0 15px 35px -12px rgba(0, 44, 73, 0.18);
-
-  --rl-nav-bg: rgba(255, 255, 255, 0.85);
-  --rl-nav-border: rgba(0, 44, 73, 0.1);
-  --rl-nav-border-top: rgba(255, 255, 255, 0.95);
-
-  --rl-chip-bg: rgba(0, 44, 73, 0.04);
-  --rl-overlay: rgba(0, 44, 73, 0.55);
-
-  --rl-btn-secondary-bg: rgba(0, 44, 73, 0.05);
-  --rl-btn-secondary-border: rgba(0, 44, 73, 0.16);
-  --rl-btn-secondary-border-top: rgba(0, 44, 73, 0.22);
-  --rl-btn-secondary-hover: rgba(0, 44, 73, 0.1);
-
-  --rl-scrollbar-track: #e3e9ed;
-  --rl-scrollbar-thumb: #8fa9bc;
-
-  color-scheme: light;
-}
-
-[data-theme="midnight"] {
-  --color-navy: #002c49;
-  --color-flame: #f9440d;
-  --color-cyan: #27a3ff;
-  --color-green: #43ae47;
-
-  --rl-bg: #00080f;
-  --rl-bg-image:
-    radial-gradient(at 20% 15%, rgba(67, 174, 71, 0.1) 0px, transparent 50%),
-    radial-gradient(at 80% 85%, rgba(39, 163, 255, 0.08) 0px, transparent 50%);
-
-  --rl-heading: #f1f5f9;
-  --rl-body: #a8b6c4;
-  --rl-muted: #768694;
-  --rl-faint: #556270;
-
-  --rl-surface: rgba(255, 255, 255, 0.035);
-  --rl-surface-hover: rgba(255, 255, 255, 0.055);
-  --rl-surface-border: rgba(255, 255, 255, 0.08);
-  --rl-surface-border-top: rgba(255, 255, 255, 0.16);
-  --rl-surface-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.65);
-
-  --rl-nav-bg: rgba(255, 255, 255, 0.04);
-  --rl-nav-border: rgba(255, 255, 255, 0.1);
-  --rl-nav-border-top: rgba(255, 255, 255, 0.2);
-
-  --rl-chip-bg: rgba(255, 255, 255, 0.03);
-  --rl-overlay: rgba(0, 0, 0, 0.5);
-
-  --rl-btn-secondary-bg: rgba(255, 255, 255, 0.04);
-  --rl-btn-secondary-border: rgba(255, 255, 255, 0.12);
-  --rl-btn-secondary-border-top: rgba(255, 255, 255, 0.22);
-  --rl-btn-secondary-hover: rgba(255, 255, 255, 0.08);
-
-  --rl-scrollbar-track: #00080f;
-  --rl-scrollbar-thumb: #1e3a52;
-
-  color-scheme: dark;
-}
-
 html {
   scroll-behavior: smooth;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
@@ -149,7 +62,7 @@ html {
   color: var(--rl-heading);
 }
 
-/* Theme-driven canvas — a single cohesive tone per theme, not a multi-color glow */
+/* Corporate Navy Canvas Mesh */
 body {
   background-color: var(--rl-bg);
   background-image: var(--rl-bg-image);
@@ -157,7 +70,6 @@ body {
   background-size: cover;
   color: var(--rl-heading);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Transparent Frosted Glass Cards */
@@ -202,9 +114,9 @@ body {
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Mobile nav drawer — solid theme-tinted panel, not a fixed dark color */
+/* Mobile nav drawer panel */
 .mobile-menu-panel {
-  background: color-mix(in srgb, var(--rl-bg) 96%, transparent);
+  background: rgba(0, 21, 38, 0.96);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
 }
@@ -215,7 +127,7 @@ body {
   filter: contrast(1.15) brightness(1.05);
 }
 
-/* Liquid Glass Buttons — brand gradient stays fixed across themes */
+/* Liquid Glass Buttons */
 .btn-glass-primary {
   background: linear-gradient(135deg, #27a3ff 0%, #0064a3 50%, #43ae47 100%);
   color: #ffffff;

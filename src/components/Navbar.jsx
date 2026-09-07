@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Download, Menu, X } from 'lucide-react';
 import CrucibleLogo from './CrucibleLogo';
-import ThemeSwitcher from './ThemeSwitcher';
 
 export const Navbar = ({ onDownloadBrandKit }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -48,9 +47,8 @@ export const Navbar = ({ onDownloadBrandKit }) => {
             ))}
           </nav>
 
-          {/* Right Actions: Theme Switcher + Large Glass Pill Download Button */}
+          {/* Right Actions: Large Glass Pill Download Button */}
           <div className="hidden sm:flex items-center gap-3 shrink-0">
-            <ThemeSwitcher />
             <button
               onClick={onDownloadBrandKit}
               className="btn-glass-primary flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-extrabold tracking-wide"
@@ -62,7 +60,6 @@ export const Navbar = ({ onDownloadBrandKit }) => {
 
           {/* Mobile menu toggle */}
           <div className="flex lg:hidden items-center gap-2">
-            <ThemeSwitcher />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2.5 rounded-full bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-[var(--rl-heading)]"
