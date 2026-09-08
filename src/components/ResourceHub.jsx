@@ -8,6 +8,12 @@ export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {
   const handleIndividualDownload = (asset) => {
     setDownloadingId(asset.id);
 
+    if (asset.id === 'logo-kit-vector') {
+      setDownloadingId(null);
+      onDownloadBrandKit();
+      return;
+    }
+
     // Real official template files ship as static assets — download them directly.
     if (asset.fileUrl) {
       const link = document.createElement('a');

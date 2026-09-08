@@ -41,40 +41,20 @@ export function AppContent() {
 
       const zip = new JSZip();
 
-      // 1. Add SVG files to Logos folder
+      // 1. Add authentic high-res PNG files to Logos folder
       const logosFolder = zip.folder('Logos');
-      
-      const darkLogoSvg = `<svg width="450" height="120" viewBox="0 0 450 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="b1" x1="20%" y1="10%" x2="90%" y2="90%"><stop offset="0%" stop-color="#27a3ff"/><stop offset="50%" stop-color="#0064a3"/><stop offset="100%" stop-color="#002c49"/></linearGradient>
-          <linearGradient id="b4" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="#43ae47"/><stop offset="60%" stop-color="#2cb5a8"/><stop offset="100%" stop-color="#27a3ff"/></linearGradient>
-        </defs>
-        <g transform="translate(10, 10) scale(0.5)">
-          <path d="M 72 26 C 98 26 132 46 142 82 C 145 92 138 98 128 92 C 104 78 78 72 52 82 C 45 85 38 78 44 71 C 52 50 60 36 72 26 Z" fill="url(#b1)"/>
-          <path d="M 50 88 C 76 78 114 82 152 108 C 158 112 154 120 144 118 C 120 114 94 116 66 128 C 58 131 52 124 56 117 C 54 105 51 96 50 88 Z" fill="#002c49"/>
-          <path d="M 64 132 C 88 122 126 122 166 142 C 172 145 167 154 158 152 C 136 147 110 148 84 158 C 77 161 71 154 75 147 C 72 141 68 136 64 132 Z" fill="#43ae47"/>
-          <path d="M 80 162 C 102 154 138 153 176 168 C 182 170 178 178 170 177 C 150 174 126 174 100 182 C 93 184 87 178 91 172 C 87 168 83 165 80 162 Z" fill="url(#b4)"/>
-        </g>
-        <text x="135" y="65" font-family="sans-serif" font-weight="800" font-size="44" fill="#ffffff">RLabZ</text>
-        <text x="135" y="92" font-family="sans-serif" font-weight="600" font-size="12" letter-spacing="1.5" fill="#cbd5e1">DESIGN | DEVELOPMENT | TRAINING</text>
-      </svg>`;
-
-      const lightLogoSvg = darkLogoSvg.replace('fill="#ffffff"', 'fill="#002c49"').replace('fill="#cbd5e1"', 'fill="#002c49"');
-
-      const symbolSvg = `<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="blade1Grad" x1="20%" y1="10%" x2="90%" y2="90%"><stop offset="0%" stop-color="#27a3ff"/><stop offset="50%" stop-color="#0064a3"/><stop offset="100%" stop-color="#002c49"/></linearGradient>
-          <linearGradient id="blade4Grad" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="#43ae47"/><stop offset="60%" stop-color="#2cb5a8"/><stop offset="100%" stop-color="#27a3ff"/></linearGradient>
-        </defs>
-        <path d="M 72 26 C 98 26 132 46 142 82 C 145 92 138 98 128 92 C 104 78 78 72 52 82 C 45 85 38 78 44 71 C 52 50 60 36 72 26 Z" fill="url(#blade1Grad)"/>
-        <path d="M 50 88 C 76 78 114 82 152 108 C 158 112 154 120 144 118 C 120 114 94 116 66 128 C 58 131 52 124 56 117 C 54 105 51 96 50 88 Z" fill="#002c49"/>
-        <path d="M 64 132 C 88 122 126 122 166 142 C 172 145 167 154 158 152 C 136 147 110 148 84 158 C 77 161 71 154 75 147 C 72 141 68 136 64 132 Z" fill="#43ae47"/>
-        <path d="M 80 162 C 102 154 138 153 176 168 C 182 170 178 178 170 177 C 150 174 126 174 100 182 C 93 184 87 178 91 172 C 87 168 83 165 80 162 Z" fill="url(#b4)"/>
-      </svg>`;
-
-      logosFolder.file('rlabz-logo-dark.svg', darkLogoSvg);
-      logosFolder.file('rlabz-logo-light.svg', lightLogoSvg);
-      logosFolder.file('rlabz-crucible-emblem.svg', symbolSvg);
+      const logoFiles = [
+        { url: '/logos/rlabz-logo-dark.png', name: 'rlabz-logo-dark.png' },
+        { url: '/logos/rlabz-logo-light.png', name: 'rlabz-logo-light.png' },
+        { url: '/logos/rlabz-crucible-emblem.png', name: 'rlabz-crucible-emblem.png' },
+      ];
+      await Promise.all(
+        logoFiles.map(async (file) => {
+          const res = await fetch(file.url);
+          const buffer = await res.arrayBuffer();
+          logosFolder.file(file.name, buffer);
+        })
+      );
 
       // 2. Add Tokens folder (CSS & JSON)
       const tokensFolder = zip.folder('Tokens');
