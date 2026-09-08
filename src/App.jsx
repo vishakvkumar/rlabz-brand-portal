@@ -36,13 +36,11 @@ export function AppContent() {
       triggerToast({
         type: 'info',
         title: 'Generating Zip',
-        message: 'Bundling RLabZ Master Brand Kit (.ZIP)...',
+        message: 'Bundling RLabZ Official Logo Kit (.ZIP)...',
       });
 
       const zip = new JSZip();
 
-      // 1. Add authentic high-res PNG files to Logos folder
-      const logosFolder = zip.folder('Logos');
       const logoFiles = [
         { url: '/logos/rlabz-logo-dark.png', name: 'rlabz-logo-dark.png' },
         { url: '/logos/rlabz-logo-light.png', name: 'rlabz-logo-light.png' },
@@ -52,73 +50,9 @@ export function AppContent() {
         logoFiles.map(async (file) => {
           const res = await fetch(file.url);
           const buffer = await res.arrayBuffer();
-          logosFolder.file(file.name, buffer);
-        })
-      );
-
-      // 2. Add Tokens folder (CSS & JSON)
-      const tokensFolder = zip.folder('Tokens');
-      const cssTokens = `:root {
-  --rlabz-navy: #002c49;
-  --rlabz-crucible-flame: #f9440d;
-  --rlabz-cyan: #27a3ff;
-  --rlabz-green: #43ae47;
-  --rlabz-slate-bg: #F8FAFC;
-  --rlabz-dark-bg: #001220;
-  --rlabz-font-primary: 'Plus Jakarta Sans', 'Inter', sans-serif;
-}`;
-      tokensFolder.file('brand-tokens.css', cssTokens);
-      tokensFolder.file('brand-colors.json', JSON.stringify({
-        primary: {
-          navy: '#002c49',
-          flame: '#f9440d',
-          cyan: '#27a3ff',
-          green: '#43ae47',
-        },
-        neutrals: {
-          slateBg: '#F8FAFC',
-          pureWhite: '#FFFFFF',
-          darkBg: '#001220',
-        }
-      }, null, 2));
-
-      // 3. Add Guidelines Documentation
-      const guidelinesText = `RLabZ BRAND IDENTITY SYSTEM - QUICK GUIDELINES
-
-1. LOGO CLEAR SPACE
-   Keep clear space around the emblem equal to at least 1.0x the height of the letter 'R'.
-
-2. BRAND METAPHOR (THE CRUCIBLE)
-   A crucible is a vessel where raw material is subjected to real heat and pressure and comes out transformed.
-   RLabZ takes students and puts them through live client projects until they come out job-ready.
-
-3. COLOR PALETTE
-   - Deep Navy: #002c49 (Dominant Base)
-   - Crucible Flame: #f9440d (Primary Accent / CTA)
-   - Electric Cyan: #27a3ff (Tech Accent / Glow)
-   - Growth Green: #43ae47 (Transformation / Status)
-
-4. TYPOGRAPHY
-   - Primary: Plus Jakarta Sans / Inter
-   - Headings: Bold / ExtraBold
-   - Body: Regular 400
-
-For questions, contact brand@rlabz.com`;
-      zip.file('RLabZ-Brand-Guidelines-2026.txt', guidelinesText);
-
-      // 4. Add official real template files (Presentation, Letterhead, Email Signature)
-      const templatesFolder = zip.folder('Templates');
-      const officialFiles = [
-        { url: '/toolkit/RLabZ-Default-Presentation-Template.pptx', name: 'RLabZ-Default-Presentation-Template.pptx' },
-        { url: '/toolkit/RLabZ-Letterhead-Template.docx', name: 'RLabZ-Letterhead-Template.docx' },
-        { url: '/toolkit/RLabZ-Email-Signature.html', name: 'RLabZ-Email-Signature.html' },
-        { url: '/toolkit/RLabZ-RCSS-Email-Signature.html', name: 'RLabZ-RCSS-Email-Signature.html' },
-      ];
-      await Promise.all(
-        officialFiles.map(async (file) => {
-          const res = await fetch(file.url);
-          const buffer = await res.arrayBuffer();
-          templatesFolder.file(file.name, buffer);
+          // Place logo directly in zip and in Logos/ directory
+          zip.file(file.name, buffer);
+          zip.file(`Logos/${file.name}`, buffer);
         })
       );
 
@@ -127,7 +61,7 @@ For questions, contact brand@rlabz.com`;
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'RLabZ-Master-Brand-Kit.zip';
+      link.download = 'RLabZ-Logo-Kit.zip';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -143,8 +77,8 @@ For questions, contact brand@rlabz.com`;
 
       triggerToast({
         type: 'success',
-        title: 'Brand Kit Downloaded!',
-        message: 'RLabZ-Master-Brand-Kit.zip downloaded successfully.',
+        title: 'Logo Kit Downloaded!',
+        message: 'RLabZ-Logo-Kit.zip downloaded successfully.',
       });
     } catch (err) {
       console.error('ZIP error:', err);

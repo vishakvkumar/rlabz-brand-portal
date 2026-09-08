@@ -263,12 +263,18 @@ export const CollateralShowcase = () => {
                       Unified Design & Development Ecosystem
                     </h3>
                     <div className="grid grid-cols-2 gap-4 pt-2">
-                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-xs">
-                        <strong className="text-[#27a3ff] block mb-1">Micro-frontends</strong>
-                        Modular UI components built with React & Tailwind CSS.
+                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-slate-300">
+                        <strong className="text-white flex items-center gap-1.5 mb-1 font-bold">
+                          <span className="w-2 h-2 rounded-full bg-[#27a3ff]" />
+                          Micro-frontends
+                        </strong>
+                        Modular UI components built with React &amp; Tailwind CSS.
                       </div>
-                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-xs">
-                        <strong className="text-[#43ae47] block mb-1">Cloud Native</strong>
+                      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-slate-300">
+                        <strong className="text-white flex items-center gap-1.5 mb-1 font-bold">
+                          <span className="w-2 h-2 rounded-full bg-[#43ae47]" />
+                          Cloud Native
+                        </strong>
                         Scalable microservices architecture with 99.99% uptime guarantee.
                       </div>
                     </div>
@@ -277,10 +283,11 @@ export const CollateralShowcase = () => {
 
                 {activeSlide === 3 && (
                   <div className="space-y-4">
-                    <span className="text-xs font-extrabold uppercase tracking-widest text-[#43ae47]">
-                      Impact & Metrics
+                    <span className="text-xs font-semibold uppercase tracking-widest text-slate-300 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#43ae47]" />
+                      Impact &amp; Metrics
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-extrabold">
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
                       Proved Performance in Real Client Environments
                     </h3>
                     <div className="grid grid-cols-3 gap-3 pt-2 text-center">
@@ -331,7 +338,7 @@ export const CollateralShowcase = () => {
                   </p>
                   <div className="text-xs text-slate-500 space-y-0.5">
                     <p>Direct: +1 (555) 019-8234 | Web: rlabz.com</p>
-                    <p className="text-[#27a3ff] font-medium">Design | Development | Training</p>
+                    <p className="text-[#002c49] font-semibold">Design | Development | Training</p>
                   </div>
                 </div>
               </div>

@@ -34,19 +34,19 @@ export const ColorPalette = ({ onTriggerToast }) => {
   const neutralColors = BRAND_COLORS.filter((c) => c.category === 'neutral');
 
   return (
-    <section id="colors" className="py-20 relative transition-colors">
+    <section id="colors" className="py-20 md:py-28 relative transition-colors scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider mb-3">
             <Palette className="w-3.5 h-3.5" />
             <span>Exact Design Tokens</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
-            Color Tokens & Swatches
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            Color Tokens &amp; Swatches
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
+          <p className="mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
             Sourced directly from the official RLabZ deck, letterhead, and email signature — the 4 core logo colors plus the neutral scale actually used across approved collateral.
           </p>
         </div>
@@ -55,33 +55,33 @@ export const ColorPalette = ({ onTriggerToast }) => {
         <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
           <button
             onClick={() => setActiveCategory('all')}
-            className={`px-4.5 py-2 rounded-full text-xs font-bold transition border ${
+            className={`px-4.5 py-2 rounded-full text-xs font-semibold transition border ${
               activeCategory === 'all'
-                ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent shadow-lg'
-                : 'bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] text-[var(--rl-muted)] hover:bg-[var(--rl-surface-hover)]'
+                ? 'bg-[#002c49] text-white border-[#27a3ff]/40 shadow-sm'
+                : 'bg-white/[0.04] border-white/10 text-slate-300 hover:bg-white/[0.08] hover:text-white'
             }`}
           >
             All Swatches ({BRAND_COLORS.length})
           </button>
           <button
             onClick={() => setActiveCategory('primary')}
-            className={`px-4.5 py-2 rounded-full text-xs font-bold transition border ${
+            className={`px-4.5 py-2 rounded-full text-xs font-semibold transition border ${
               activeCategory === 'primary'
-                ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent shadow-lg'
-                : 'bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] text-[var(--rl-muted)] hover:bg-[var(--rl-surface-hover)]'
+                ? 'bg-[#002c49] text-white border-[#27a3ff]/40 shadow-sm'
+                : 'bg-white/[0.04] border-white/10 text-slate-300 hover:bg-white/[0.08] hover:text-white'
             }`}
           >
             Core Logo Palette ({primaryColors.length})
           </button>
           <button
             onClick={() => setActiveCategory('neutral')}
-            className={`px-4.5 py-2 rounded-full text-xs font-bold transition border ${
+            className={`px-4.5 py-2 rounded-full text-xs font-semibold transition border ${
               activeCategory === 'neutral'
-                ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent shadow-lg'
-                : 'bg-[var(--rl-chip-bg)] border-[var(--rl-surface-border)] text-[var(--rl-muted)] hover:bg-[var(--rl-surface-hover)]'
+                ? 'bg-[#002c49] text-white border-[#27a3ff]/40 shadow-sm'
+                : 'bg-white/[0.04] border-white/10 text-slate-300 hover:bg-white/[0.08] hover:text-white'
             }`}
           >
-            Neutral & Surface ({neutralColors.length})
+            Neutral &amp; Surface ({neutralColors.length})
           </button>
         </div>
 
@@ -122,7 +122,7 @@ export const ColorPalette = ({ onTriggerToast }) => {
 
                     <div className="p-5 flex flex-col gap-3">
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-300">
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-200">
                           {spec.role}
                         </span>
                         <p className="text-xs mt-1 leading-relaxed text-[var(--rl-muted)]">
@@ -153,7 +153,7 @@ export const ColorPalette = ({ onTriggerToast }) => {
           <div>
             <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-[var(--rl-heading)]">
               <Shield className="w-5 h-5 text-[#43ae47]" />
-              Neutral & Surface Tokens
+              Neutral &amp; Surface Tokens
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {neutralColors.map((color) => {
@@ -180,7 +180,7 @@ export const ColorPalette = ({ onTriggerToast }) => {
                     </div>
 
                     <div className="p-4">
-                      <span className="text-[10px] font-semibold text-cyan-300 uppercase tracking-wider">{color.role}</span>
+                      <span className="text-[11px] font-semibold text-slate-200 uppercase tracking-wider">{color.role}</span>
                       <p className="text-xs mt-1 text-[var(--rl-muted)]">{color.usage}</p>
                     </div>
                   </div>

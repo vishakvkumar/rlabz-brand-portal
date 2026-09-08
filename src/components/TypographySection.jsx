@@ -6,20 +6,20 @@ export const TypographySection = () => {
   const [sampleText, setSampleText] = useState('RLabZ: Transforming Ideas into Intelligent Solutions');
 
   return (
-    <section id="typography" className="py-20 relative transition-colors">
+    <section id="typography" className="py-20 md:py-28 relative transition-colors scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#27a3ff]/10 border border-[#27a3ff]/30 text-[#27a3ff] text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider mb-3">
             <Type className="w-3.5 h-3.5" />
             <span>Typography System</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
-            Type Hierarchy & Font Specs
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            Type Hierarchy &amp; Font Specs
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
-            Primary Brand Typeface: <strong>Coolvetica</strong> paired with <strong>Plus Jakarta Sans</strong> &amp; <strong>Inter</strong> for UI components.
+          <p className="mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
+            Primary Brand Typeface: <strong className="text-white">Coolvetica</strong> paired with <strong className="text-white">Plus Jakarta Sans</strong> &amp; <strong className="text-white">Inter</strong> for UI components.
           </p>
         </div>
 

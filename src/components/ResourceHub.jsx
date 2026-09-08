@@ -63,57 +63,57 @@ export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {
   };
 
   return (
-    <section id="downloads" className="py-20 relative transition-colors">
+    <section id="downloads" className="py-20 md:py-28 relative transition-colors scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider mb-3">
             <FolderDown className="w-3.5 h-3.5" />
-            <span>Downloads & Resources</span>
+            <span>Downloads &amp; Resources</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
-            Brand Assets & Template Repository
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            Brand Assets &amp; Template Repository
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
+          <p className="mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
             Official design vectors, 4K PNG renders, presentation decks, print specs, and guideline documents.
           </p>
         </div>
 
         {/* Master Zip Callout Card */}
-        <div className="rounded-3xl p-8 sm:p-10 mb-14 glass-pedestal text-[var(--rl-heading)] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <div className="rounded-3xl p-8 sm:p-10 mb-14 bg-white/[0.03] border border-white/10 text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden shadow-xl">
           <div className="space-y-2 max-w-xl z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#43ae47]/20 text-[#43ae47] border border-[#43ae47]/40 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] text-slate-200 border border-white/15 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-[#43ae47]" />
               <span>Complete Package</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-extrabold">
-              Download Full RLabZ Brand Kit (.ZIP)
+              Download Official RLabZ Logo Kit (.ZIP)
             </h3>
-            <p className="text-xs sm:text-sm text-[var(--rl-muted)]">
-              Includes all SVG vector lockups, PNG 4K renders, EPS print files, color palette JSON, slide deck templates, and brand guidelines in a single archive.
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Includes authentic high-resolution dark, light, and crucible emblem transparent logo files in a single archive.
             </p>
           </div>
 
           <button
             onClick={onDownloadBrandKit}
-            className="z-10 shrink-0 btn-glass-primary flex items-center gap-3 px-8 py-4 rounded-full text-xs font-extrabold shadow-2xl"
+            className="z-10 shrink-0 btn-glass-primary flex items-center gap-3 px-8 py-4 rounded-full text-xs font-semibold tracking-wide"
           >
             <Download className="w-5 h-5" />
-            <span>Download All Assets (.ZIP)</span>
+            <span>Download Logo Kit (.ZIP)</span>
           </button>
         </div>
 
         {/* Assets Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {ASSET_PACKAGES.map((asset) => (
             <div
               key={asset.id}
-              className={`rounded-2xl p-6 frosted-glass-card transition-all flex flex-col justify-between ${asset.real ? 'ring-1 ring-[#43ae47]/30' : ''}`}
+              className={`rounded-2xl p-7 frosted-glass-card transition-all flex flex-col justify-between ${asset.real ? 'ring-1 ring-[#43ae47]/30' : ''}`}
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="px-2.5 py-1 rounded-lg bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-cyan-300 text-[11px] font-bold uppercase tracking-wider">
+                  <span className="px-2.5 py-1 rounded-lg bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-slate-200 text-[11px] font-semibold uppercase tracking-wider">
                     {asset.type}
                   </span>
                   <span className="text-xs font-mono text-[var(--rl-muted)]">{asset.size}</span>

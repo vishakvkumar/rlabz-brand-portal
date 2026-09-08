@@ -3,7 +3,7 @@ import LogoSystem from '../components/LogoSystem';
 
 export const LogosPage = ({ onTriggerToast }) => {
   return (
-    <div className="pt-24 pb-12">
+    <div className="pt-36 sm:pt-40 pb-20">
       <LogoSystem onTriggerToast={onTriggerToast} />
     </div>
   );

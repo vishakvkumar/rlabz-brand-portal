@@ -92,19 +92,19 @@ export const LogoSystem = ({ onTriggerToast }) => {
   };
 
   return (
-    <section id="logos" className="py-20 relative transition-colors">
+    <section id="logos" className="py-20 md:py-28 relative transition-colors scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Title */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider mb-3">
             <Layers className="w-3.5 h-3.5" />
             <span>Official Identity Assets</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
             Official RLabZ Logo Lockups
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
+          <p className="mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
             Rendered directly from the official attached high-resolution logo assets at prominent size.
           </p>
         </div>
@@ -228,10 +228,10 @@ export const LogoSystem = ({ onTriggerToast }) => {
 
             <button
               onClick={() => setShowClearSpace(!showClearSpace)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition border ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition border ${
                 showClearSpace
-                  ? 'bg-gradient-to-r from-[#27a3ff] to-[#43ae47] text-white border-transparent'
-                  : 'bg-[var(--rl-chip-bg)] text-[var(--rl-muted)] border-[var(--rl-surface-border)]'
+                  ? 'bg-[#002c49] text-white border-[#27a3ff]/40 shadow-sm'
+                  : 'bg-white/[0.04] text-slate-300 border-white/10 hover:bg-white/[0.08] hover:text-white'
               }`}
             >
               <Eye className="w-4 h-4" />

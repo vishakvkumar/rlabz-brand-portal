@@ -3,7 +3,7 @@ import TypographySection from '../components/TypographySection';
 
 export const TypographyPage = () => {
   return (
-    <div className="pt-24 pb-12">
+    <div className="pt-36 sm:pt-40 pb-20">
       <TypographySection />
     </div>
   );

@@ -3,7 +3,7 @@ import ResourceHub from '../components/ResourceHub';
 
 export const DownloadsPage = ({ onDownloadBrandKit, onTriggerToast }) => {
   return (
-    <div className="pt-24 pb-12">
+    <div className="pt-36 sm:pt-40 pb-20">
       <ResourceHub onDownloadBrandKit={onDownloadBrandKit} onTriggerToast={onTriggerToast} />
     </div>
   );

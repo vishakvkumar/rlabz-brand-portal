@@ -3,7 +3,7 @@ import ColorPalette from '../components/ColorPalette';
 
 export const ColorsPage = ({ onTriggerToast }) => {
   return (
-    <div className="pt-24 pb-12">
+    <div className="pt-36 sm:pt-40 pb-20">
       <ColorPalette onTriggerToast={onTriggerToast} />
     </div>
   );

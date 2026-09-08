@@ -21,19 +21,19 @@ export const VoiceSection = ({ onTriggerToast }) => {
   };
 
   return (
-    <section id="voice" className="py-20 relative transition-colors">
+    <section id="voice" className="py-20 md:py-28 relative transition-colors scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider mb-3">
             <MessageSquareText className="w-3.5 h-3.5" />
             <span>Verbal Identity</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--rl-heading)]">
-            Brand Voice & Tone
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            Brand Voice &amp; Tone
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
+          <p className="mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
             How RLabZ sounds in writing — from decks and proposals to emails and social posts.
           </p>
         </div>

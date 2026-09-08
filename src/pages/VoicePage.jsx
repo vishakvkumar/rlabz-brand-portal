@@ -3,7 +3,7 @@ import VoiceSection from '../components/VoiceSection';
 
 export const VoicePage = ({ onTriggerToast }) => {
   return (
-    <div className="pt-24 pb-12">
+    <div className="pt-36 sm:pt-40 pb-20">
       <VoiceSection onTriggerToast={onTriggerToast} />
     </div>
   );

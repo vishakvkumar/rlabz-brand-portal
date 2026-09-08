@@ -4,30 +4,27 @@ import { CrucibleLogo } from './CrucibleLogo';
 
 export const BrandNarrative = () => {
   return (
-    <section id="story" className="py-20 relative overflow-hidden">
+    <section id="story" className="py-20 md:py-28 relative overflow-hidden scroll-mt-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider mb-3">
             <Flame className="w-3.5 h-3.5 text-[#f9440d]" />
             <span>Brand Narrative &amp; Philosophy</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#ffffff]">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
             The Brand Story
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[var(--rl-muted)]">
+          <p className="mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
             Why the 4-blade crucible emblem represents RLabZ’s core transformational mission.
           </p>
         </div>
 
-        {/* Full-width Frosted Glass Card with Left Vertical Glowing Bar */}
-        <div className="relative rounded-3xl p-8 sm:p-12 frosted-glass-card overflow-hidden">
+        {/* Full-width Frosted Glass Card with Dignified Left Accent */}
+        <div className="relative rounded-3xl p-8 sm:p-12 frosted-glass-card overflow-hidden border-l-4 border-l-[#27a3ff]">
 
-          {/* Left Vertical Glowing Bar */}
-          <div className="absolute top-0 left-0 bottom-0 w-2 bg-gradient-to-b from-[#27a3ff] via-[#43ae47] to-[#f9440d] shadow-[0_0_20px_rgba(39,163,255,0.6)]" />
-
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center pl-4 sm:pl-6">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
             {/* Quote / Narrative Text */}
             <div className="lg:col-span-8 space-y-6">
@@ -43,9 +40,9 @@ export const BrandNarrative = () => {
             </div>
 
             {/* Metaphor Pillars Badge Card */}
-            <div className="lg:col-span-4 rounded-2xl p-6 bg-slate-950/60 border border-white/10 backdrop-blur-xl flex flex-col gap-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#27a3ff] flex items-center gap-2">
-                <Compass className="w-4 h-4" />
+            <div className="lg:col-span-4 rounded-2xl p-6 bg-[#001526]/90 border border-white/10 backdrop-blur-xl flex flex-col gap-4">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <Compass className="w-4 h-4 text-[#27a3ff]" />
                 Three Pillars of Transformation
               </h4>
 
@@ -55,7 +52,7 @@ export const BrandNarrative = () => {
                 </div>
                 <div>
                   <h5 className="text-xs font-bold text-white">Real Heat &amp; Pressure</h5>
-                  <p className="text-[11px] text-slate-400">Live client projects instead of artificial simulations.</p>
+                  <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">Live client projects instead of artificial simulations.</p>
                 </div>
               </div>
 
@@ -65,7 +62,7 @@ export const BrandNarrative = () => {
                 </div>
                 <div>
                   <h5 className="text-xs font-bold text-white">Job-Ready Talent</h5>
-                  <p className="text-[11px] text-slate-400">Transforming learners into battle-tested professionals.</p>
+                  <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">Transforming learners into battle-tested professionals.</p>
                 </div>
               </div>
 
@@ -75,7 +72,7 @@ export const BrandNarrative = () => {
                 </div>
                 <div>
                   <h5 className="text-xs font-bold text-white">Modern Lab Innovation</h5>
-                  <p className="text-[11px] text-slate-400">Abstract 4-blade mark avoiding cliché beaker graphics.</p>
+                  <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">Abstract 4-blade mark avoiding cliché beaker graphics.</p>
                 </div>
               </div>
             </div>
