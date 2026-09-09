@@ -36,24 +36,22 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     setTimeout(() => {
       setLoading(false);
       setStep(2);
+      setOtp('1234');
       if (onTriggerToast) {
         onTriggerToast({
           type: 'info',
           title: 'Verification Code Sent',
-          message: `Passcode sent to ${trimmedEmail}. (Enter 1234 or any 4 digits to verify)`,
+          message: `Passcode sent to ${trimmedEmail}.`,
         });
       }
-    }, 600);
+    }, 400);
   };
 
   const handleVerify = (e) => {
     e.preventDefault();
     setError('');
 
-    if (!otp || otp.trim().length < 4) {
-      setError('Please enter the 4-digit verification code.');
-      return;
-    }
+    const effectiveOtp = (otp && otp.trim()) ? otp.trim() : '1234';
 
     setLoading(true);
     setTimeout(() => {
@@ -73,7 +71,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
       setStep(1);
       setEmail('');
       setOtp('');
-    }, 600);
+    }, 300);
   };
 
   return (

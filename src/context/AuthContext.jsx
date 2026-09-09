@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useRef } from 'react';
 
 const AuthContext = createContext();
 
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [pendingAction, setPendingAction] = useState(null);
+  const pendingActionRef = useRef(null);
 
   const login = (email) => {
     const userData = { email, authenticatedAt: new Date().toISOString() };
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       }
       return true;
     } else {
-      setPendingAction(() => actionCallback);
+      pendingActionRef.current = typeof actionCallback === 'function' ? actionCallback : null;
       setIsAuthModalOpen(true);
       return false;
     }
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
   const closeAuthModal = () => {
     setIsAuthModalOpen(false);
-    setPendingAction(null);
+    pendingActionRef.current = null;
   };
 
   const completeAuth = (email) => {
@@ -53,11 +53,13 @@ export const AuthProvider = ({ children }) => {
     setIsAuthModalOpen(false);
     
     // Execute pending action after successful authentication
-    if (pendingAction) {
+    const actionToRun = pendingActionRef.current;
+    pendingActionRef.current = null;
+    
+    if (typeof actionToRun === 'function') {
       setTimeout(() => {
-        pendingAction();
-        setPendingAction(null);
-      }, 300);
+        actionToRun();
+      }, 100);
     }
   };
 
