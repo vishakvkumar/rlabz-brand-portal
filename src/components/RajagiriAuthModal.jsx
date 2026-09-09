@@ -200,8 +200,11 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     setGoogleAccountInput('');
     setStep(3);
 
+    // Custom Google Client ID from environment or fallback
+    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '1084291849102-rlabzrajagirisso.apps.googleusercontent.com';
+
     // Launch official Google OAuth popup window
-    const popupUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1084291849102-rlabzrajagirisso.apps.googleusercontent.com&response_type=id_token&scope=email%20profile&hd=rajagiri.edu&redirect_uri=${encodeURIComponent(window.location.origin)}`;
+    const popupUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&response_type=id_token&scope=email%20profile&hd=rajagiri.edu&redirect_uri=${encodeURIComponent(window.location.origin)}`;
     const width = 500;
     const height = 600;
     const left = window.screenX + (window.outerWidth - width) / 2;
