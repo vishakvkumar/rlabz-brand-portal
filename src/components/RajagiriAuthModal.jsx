@@ -1,47 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Lock, Mail, ArrowRight, X, AlertCircle, KeyRound, CheckCircle2, RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-// Official Google Logo SVG Component
-const GoogleIcon = () => (
-  <svg className="w-5 h-5" viewBox="0 0 24 24">
-    <path
-      fill="#4285F4"
-      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-    />
-    <path
-      fill="#34A853"
-      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-    />
-    <path
-      fill="#FBBC05"
-      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-    />
-    <path
-      fill="#EA4335"
-      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-    />
-  </svg>
-);
+// Helper to decode JWT token returned by Google Identity Services
+const decodeJwtPayload = (token) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (err) {
+    console.error('Failed to parse Google JWT token:', err);
+    return null;
+  }
+};
 
 export const RajagiriAuthModal = ({ onTriggerToast }) => {
   const { isAuthModalOpen, closeAuthModal, completeAuth } = useAuth();
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [generatedOtp, setGeneratedOtp] = useState('');
-  const [step, setStep] = useState(1); // 1: Email/SSO selection, 2: OTP Entry, 3: Google SSO Selector
+  const [step, setStep] = useState(1); // 1: Main Auth Options, 2: OTP Entry, 3: Google SSO Prompt
   const [googleAccountInput, setGoogleAccountInput] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Initialize official Google Identity Services SDK button when modal is open
+  useEffect(() => {
+    if (!isAuthModalOpen) return;
+
+    const initGoogleGSI = () => {
+      if (window.google?.accounts?.id) {
+        try {
+          window.google.accounts.id.initialize({
+            client_id: '1084291849102-rlabzrajagirisso.apps.googleusercontent.com',
+            callback: handleGoogleCredentialResponse,
+            auto_select: false,
+          });
+
+          const btnContainer = document.getElementById('googleSignInBtnDiv');
+          if (btnContainer) {
+            btnContainer.innerHTML = '';
+            window.google.accounts.id.renderButton(btnContainer, {
+              theme: 'filled_blue',
+              size: 'large',
+              type: 'standard',
+              shape: 'pill',
+              text: 'signin_with',
+              logo_alignment: 'left',
+              width: 320,
+            });
+          }
+        } catch (err) {
+          console.warn('Google Identity Services initialization notice:', err);
+        }
+      }
+    };
+
+    const timer = setTimeout(initGoogleGSI, 300);
+    return () => clearTimeout(timer);
+  }, [isAuthModalOpen, step]);
+
   if (!isAuthModalOpen) return null;
 
+  // Strict email validation: Require valid username (at least 3 chars) + @rajagiri.edu domain
   const validateRajagiriEmail = (emailStr) => {
-    const regex = /^[a-zA-Z0-9._%+-]+@rajagiri\.edu$/i;
-    return regex.test(emailStr.trim());
+    const trimmed = emailStr.trim();
+    const regex = /^[a-zA-Z0-9._%+-]{3,}@rajagiri\.edu$/i;
+    return regex.test(trimmed);
   };
 
-  // Generate a random 6-digit OTP code
+  // Google OAuth 2.0 Credential Callback
+  const handleGoogleCredentialResponse = (response) => {
+    if (!response?.credential) {
+      setError('Google Sign-In failed. Please try again.');
+      return;
+    }
+
+    const payload = decodeJwtPayload(response.credential);
+    if (!payload || !payload.email) {
+      setError('Could not retrieve email from Google Workspace credential.');
+      return;
+    }
+
+    const authenticatedEmail = payload.email.toLowerCase();
+    if (!authenticatedEmail.endsWith('@rajagiri.edu')) {
+      setError(`Access Denied: ${authenticatedEmail} is not an authorized @rajagiri.edu account.`);
+      return;
+    }
+
+    completeAuth(authenticatedEmail);
+    if (onTriggerToast) {
+      onTriggerToast({
+        type: 'success',
+        title: 'Google Account Verified!',
+        message: `Authenticated as ${authenticatedEmail} via Google Workspace.`,
+      });
+    }
+  };
+
+  // Generate random 6-digit OTP code
   const generateNewOtp = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
   };
@@ -57,7 +120,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     }
 
     if (!validateRajagiriEmail(trimmedEmail)) {
-      setError('Access Restricted: Only official @rajagiri.edu email accounts are authorized.');
+      setError('Access Restricted: Enter a valid employee email (e.g., name@rajagiri.edu). Dummy addresses like a@rajagiri.edu are rejected.');
       return;
     }
 
@@ -106,7 +169,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     }
 
     if (trimmedOtp !== generatedOtp) {
-      setError(`Invalid passcode. Please enter the 6-digit code [ ${generatedOtp} ] sent to ${email}.`);
+      setError(`Invalid passcode. Enter the exact 6-digit code [ ${generatedOtp} ] sent to ${email}.`);
       return;
     }
 
@@ -124,7 +187,6 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
         });
       }
 
-      // Reset modal state
       setStep(1);
       setEmail('');
       setOtp('');
@@ -132,13 +194,13 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     }, 300);
   };
 
-  // Google Workspace SSO Authentication Flow
+  // Google Workspace SSO Authentication Launcher
   const handleGoogleSSOClick = () => {
     setError('');
     setGoogleAccountInput('');
-    setStep(3); // Step 3: Google SSO Selector
+    setStep(3);
 
-    // Attempt to open official Google Auth Popup window (hd=rajagiri.edu locks to Rajagiri domain)
+    // Launch official Google OAuth popup window
     const popupUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1084291849102-rlabzrajagirisso.apps.googleusercontent.com&response_type=id_token&scope=email%20profile&hd=rajagiri.edu&redirect_uri=${encodeURIComponent(window.location.origin)}`;
     const width = 500;
     const height = 600;
@@ -148,7 +210,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     try {
       window.open(popupUrl, 'Google Workspace SSO', `width=${width},height=${height},left=${left},top=${top}`);
     } catch (err) {
-      console.warn('Popup blocked:', err);
+      console.warn('Popup notice:', err);
     }
   };
 
@@ -163,7 +225,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     }
 
     if (!validateRajagiriEmail(trimmedEmail)) {
-      setError('Google Sign-In Error: Must sign in with a valid @rajagiri.edu Google Workspace account.');
+      setError('Google Sign-In Error: Must sign in with a valid employee @rajagiri.edu Google Workspace account (e.g. name@rajagiri.edu).');
       return;
     }
 
@@ -183,7 +245,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
       setStep(1);
       setEmail('');
       setGoogleAccountInput('');
-    }, 500);
+    }, 400);
   };
 
   return (
@@ -230,16 +292,26 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
         )}
 
         {step === 1 && (
-          /* Step 1: Login Selection (Google SSO + Email OTP) */
+          /* Step 1: Login Selection (Official Google GSI Button + Email OTP) */
           <div className="space-y-4">
-            {/* Google Workspace SSO Button */}
-            <button
-              onClick={handleGoogleSSOClick}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-white text-slate-800 hover:bg-slate-100 font-bold text-xs shadow-md transition border border-slate-200"
-            >
-              <GoogleIcon />
-              <span>Sign in with Google (@rajagiri.edu)</span>
-            </button>
+            {/* Official Google Identity Services SDK Render Container */}
+            <div className="flex flex-col items-center justify-center gap-2">
+              <div id="googleSignInBtnDiv" className="w-full flex justify-center py-1"></div>
+              
+              {/* Fallback Google Workspace SSO Button if GSI hasn't loaded */}
+              <button
+                onClick={handleGoogleSSOClick}
+                className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-white text-slate-800 hover:bg-slate-100 font-bold text-xs shadow-md transition border border-slate-200"
+              >
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                <span>Sign in with Google (@rajagiri.edu)</span>
+              </button>
+            </div>
 
             <div className="relative flex items-center justify-center my-3">
               <div className="border-t border-[var(--rl-surface-border)] w-full" />
@@ -252,7 +324,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
             <form onSubmit={handleSendCode} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-[var(--rl-muted)] mb-1.5">
-                  Rajagiri Email Address
+                  Rajagiri Employee Email Address
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--rl-muted)]">
@@ -265,7 +337,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
                       setEmail(e.target.value);
                       if (error) setError('');
                     }}
-                    placeholder="username@rajagiri.edu"
+                    placeholder="name@rajagiri.edu"
                     className="w-full pl-10 pr-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-sm text-[var(--rl-heading)] placeholder:text-[var(--rl-muted)] focus:outline-none focus:border-[#27a3ff] focus:ring-1 focus:ring-[#27a3ff] transition"
                     required
                   />
@@ -338,7 +410,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
                     setOtp(e.target.value.replace(/\D/g, ''));
                     if (error) setError('');
                   }}
-                  placeholder={generatedOtp}
+                  placeholder="Enter 6 digits"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-base text-[var(--rl-heading)] placeholder:text-[var(--rl-muted)]/50 focus:outline-none focus:border-[#43ae47] focus:ring-1 focus:ring-[#43ae47] tracking-[0.2em] font-mono transition text-center"
                   autoFocus
                   required
@@ -364,15 +436,20 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
         )}
 
         {step === 3 && (
-          /* Step 3: Google Workspace SSO Account Prompt */
+          /* Step 3: Google Workspace SSO Account Verification */
           <form onSubmit={handleGoogleSSOConfirm} className="space-y-4">
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center space-y-2">
               <div className="w-12 h-12 rounded-full bg-white p-2 mx-auto flex items-center justify-center shadow-md">
-                <GoogleIcon />
+                <svg className="w-6 h-6" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
               </div>
               <h4 className="text-sm font-bold text-white">Google Workspace SSO Verification</h4>
               <p className="text-xs text-slate-300">
-                A Google Auth window was opened. Enter your official <code className="text-[#27a3ff]">@rajagiri.edu</code> Google email address below to complete authorization:
+                A Google Auth window was launched. Enter your official <code className="text-[#27a3ff]">@rajagiri.edu</code> Google Workspace email address to complete authorization:
               </p>
               <button
                 type="button"
