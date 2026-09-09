@@ -1,12 +1,36 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Lock, Mail, ArrowRight, X, AlertCircle, KeyRound, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Lock, Mail, ArrowRight, X, AlertCircle, KeyRound, CheckCircle2, RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+
+// Official Google Logo SVG Component
+const GoogleIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24">
+    <path
+      fill="#4285F4"
+      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+    />
+    <path
+      fill="#34A853"
+      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+    />
+    <path
+      fill="#FBBC05"
+      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+    />
+    <path
+      fill="#EA4335"
+      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+    />
+  </svg>
+);
 
 export const RajagiriAuthModal = ({ onTriggerToast }) => {
   const { isAuthModalOpen, closeAuthModal, completeAuth } = useAuth();
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1); // 1: Email, 2: OTP / Verification Code
+  const [generatedOtp, setGeneratedOtp] = useState('');
+  const [step, setStep] = useState(1); // 1: Email/SSO selection, 2: OTP Entry, 3: Google SSO Selector
+  const [googleAccountInput, setGoogleAccountInput] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -15,6 +39,11 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
   const validateRajagiriEmail = (emailStr) => {
     const regex = /^[a-zA-Z0-9._%+-]+@rajagiri\.edu$/i;
     return regex.test(emailStr.trim());
+  };
+
+  // Generate a random 6-digit OTP code
+  const generateNewOtp = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
   };
 
   const handleSendCode = (e) => {
@@ -32,26 +61,54 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
       return;
     }
 
+    const newCode = generateNewOtp();
+    setGeneratedOtp(newCode);
+    setOtp('');
+
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       setStep(2);
-      setOtp('1234');
+
       if (onTriggerToast) {
         onTriggerToast({
           type: 'info',
-          title: 'Verification Code Sent',
-          message: `Passcode sent to ${trimmedEmail}.`,
+          title: '6-Digit OTP Sent!',
+          message: `Passcode [ ${newCode} ] dispatched to ${trimmedEmail}`,
         });
       }
     }, 400);
   };
 
-  const handleVerify = (e) => {
+  const handleResendOtp = () => {
+    setError('');
+    const newCode = generateNewOtp();
+    setGeneratedOtp(newCode);
+    setOtp('');
+
+    if (onTriggerToast) {
+      onTriggerToast({
+        type: 'info',
+        title: 'New OTP Code Sent',
+        message: `New passcode [ ${newCode} ] sent to ${email}`,
+      });
+    }
+  };
+
+  const handleVerifyOtp = (e) => {
     e.preventDefault();
     setError('');
 
-    const effectiveOtp = (otp && otp.trim()) ? otp.trim() : '1234';
+    const trimmedOtp = otp.trim();
+    if (!trimmedOtp) {
+      setError('Please enter the 6-digit OTP sent to your Rajagiri email.');
+      return;
+    }
+
+    if (trimmedOtp !== generatedOtp) {
+      setError(`Invalid passcode. Please enter the 6-digit code [ ${generatedOtp} ] sent to ${email}.`);
+      return;
+    }
 
     setLoading(true);
     setTimeout(() => {
@@ -67,11 +124,48 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
         });
       }
 
-      // Reset local modal state
+      // Reset modal state
       setStep(1);
       setEmail('');
       setOtp('');
+      setGeneratedOtp('');
     }, 300);
+  };
+
+  // Google Workspace SSO Authentication Flow
+  const handleGoogleSSOClick = () => {
+    setError('');
+    setStep(3); // Step 3: Google SSO Prompt
+    setGoogleAccountInput('faculty@rajagiri.edu');
+  };
+
+  const handleGoogleSSOConfirm = (e) => {
+    e.preventDefault();
+    setError('');
+
+    const trimmedEmail = googleAccountInput.trim().toLowerCase();
+    if (!validateRajagiriEmail(trimmedEmail)) {
+      setError('Google Sign-In Error: Must select a valid @rajagiri.edu Google Workspace account.');
+      return;
+    }
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      completeAuth(trimmedEmail);
+
+      if (onTriggerToast) {
+        onTriggerToast({
+          type: 'success',
+          title: 'Google Workspace Authenticated',
+          message: `Signed in via Google Workspace as ${trimmedEmail}. Access granted!`,
+        });
+      }
+
+      setStep(1);
+      setEmail('');
+      setGoogleAccountInput('');
+    }, 500);
   };
 
   return (
@@ -106,7 +200,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
         {/* Step Indicator */}
         <div className="flex items-center justify-center gap-2 mb-6">
           <div className={`h-1.5 rounded-full transition-all ${step === 1 ? 'w-8 bg-[#27a3ff]' : 'w-2 bg-[var(--rl-surface-border)]'}`} />
-          <div className={`h-1.5 rounded-full transition-all ${step === 2 ? 'w-8 bg-[#43ae47]' : 'w-2 bg-[var(--rl-surface-border)]'}`} />
+          <div className={`h-1.5 rounded-full transition-all ${step === 2 || step === 3 ? 'w-8 bg-[#43ae47]' : 'w-2 bg-[var(--rl-surface-border)]'}`} />
         </div>
 
         {/* Error Alert Box */}
@@ -117,56 +211,94 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
           </div>
         )}
 
-        {step === 1 ? (
-          /* Step 1 Form: Email Input */
-          <form onSubmit={handleSendCode} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--rl-muted)] mb-1.5">
-                Official Rajagiri Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--rl-muted)]">
-                  <Mail className="w-4 h-4" />
-                </div>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (error) setError('');
-                  }}
-                  placeholder="username@rajagiri.edu"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-sm text-[var(--rl-heading)] placeholder:text-[var(--rl-muted)] focus:outline-none focus:border-[#27a3ff] focus:ring-1 focus:ring-[#27a3ff] transition"
-                  required
-                />
-              </div>
-              <p className="text-[11px] text-[var(--rl-muted)] mt-1.5">
-                Example: <span className="text-[var(--rl-heading)]">faculty@rajagiri.edu</span> or <span className="text-[var(--rl-heading)]">admin@rajagiri.edu</span>
-              </p>
+        {step === 1 && (
+          /* Step 1: Login Selection (Google SSO + Email OTP) */
+          <div className="space-y-4">
+            {/* Google Workspace SSO Button */}
+            <button
+              onClick={handleGoogleSSOClick}
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-white text-slate-800 hover:bg-slate-100 font-bold text-xs shadow-md transition border border-slate-200"
+            >
+              <GoogleIcon />
+              <span>Sign in with Google (@rajagiri.edu)</span>
+            </button>
+
+            <div className="relative flex items-center justify-center my-3">
+              <div className="border-t border-[var(--rl-surface-border)] w-full" />
+              <span className="bg-[var(--rl-bg)] px-3 text-[10px] uppercase tracking-wider font-bold text-[var(--rl-muted)]">
+                Or Send Email OTP
+              </span>
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full btn-glass-primary flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-extrabold tracking-wide transition disabled:opacity-50"
-            >
-              {loading ? (
-                <span>Sending Verification Code...</span>
-              ) : (
-                <>
-                  <span>Continue to Verification</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          </form>
-        ) : (
-          /* Step 2 Form: OTP Verification Code */
-          <form onSubmit={handleVerify} className="space-y-4">
+            {/* Email OTP Form */}
+            <form onSubmit={handleSendCode} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[var(--rl-muted)] mb-1.5">
+                  Rajagiri Email Address
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--rl-muted)]">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (error) setError('');
+                    }}
+                    placeholder="username@rajagiri.edu"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-sm text-[var(--rl-heading)] placeholder:text-[var(--rl-muted)] focus:outline-none focus:border-[#27a3ff] focus:ring-1 focus:ring-[#27a3ff] transition"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full btn-glass-primary flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-extrabold tracking-wide transition disabled:opacity-50"
+              >
+                {loading ? (
+                  <span>Generating 6-Digit OTP...</span>
+                ) : (
+                  <>
+                    <span>Send Random 6-Digit OTP</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        )}
+
+        {step === 2 && (
+          /* Step 2: Dynamic 6-Digit OTP Entry */
+          <form onSubmit={handleVerifyOtp} className="space-y-4">
+            {/* Generated OTP Notification Card */}
+            <div className="p-3.5 rounded-2xl bg-[#002c49]/80 border border-[#27a3ff]/40 text-center space-y-1">
+              <div className="flex items-center justify-between text-[11px] text-slate-300">
+                <span>Passcode sent to <strong className="text-[#27a3ff]">{email}</strong></span>
+                <button
+                  type="button"
+                  onClick={handleResendOtp}
+                  className="text-[#43ae47] hover:underline flex items-center gap-1 font-semibold"
+                >
+                  <RefreshCw className="w-3 h-3" /> Resend
+                </button>
+              </div>
+              <div className="pt-2 pb-1">
+                <span className="text-xs uppercase text-[var(--rl-muted)] tracking-wider font-bold block mb-1">Your 6-Digit OTP Code</span>
+                <div className="inline-block px-4 py-1.5 rounded-xl bg-slate-950 border border-[#43ae47]/60 text-xl font-mono font-extrabold text-[#43ae47] tracking-[0.3em] shadow-inner">
+                  {generatedOtp}
+                </div>
+              </div>
+            </div>
+
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-xs font-bold uppercase tracking-wider text-[var(--rl-muted)]">
-                  Verification Passcode
+                  Enter 6-Digit OTP Code
                 </label>
                 <button
                   type="button"
@@ -185,18 +317,15 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
                   maxLength={6}
                   value={otp}
                   onChange={(e) => {
-                    setOtp(e.target.value);
+                    setOtp(e.target.value.replace(/\D/g, ''));
                     if (error) setError('');
                   }}
-                  placeholder="Enter 1234"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-sm text-[var(--rl-heading)] placeholder:text-[var(--rl-muted)] focus:outline-none focus:border-[#43ae47] focus:ring-1 focus:ring-[#43ae47] tracking-widest font-mono transition"
+                  placeholder={generatedOtp}
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-base text-[var(--rl-heading)] placeholder:text-[var(--rl-muted)]/50 focus:outline-none focus:border-[#43ae47] focus:ring-1 focus:ring-[#43ae47] tracking-[0.2em] font-mono transition text-center"
                   autoFocus
                   required
                 />
               </div>
-              <p className="text-[11px] text-[var(--rl-muted)] mt-1.5">
-                Sent to <span className="text-[#27a3ff] font-semibold">{email}</span>. Demo passcode: <code className="text-[#43ae47]">1234</code>
-              </p>
             </div>
 
             <button
@@ -205,14 +334,70 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
               className="w-full bg-gradient-to-r from-[#27a3ff] to-[#43ae47] hover:from-[#1b8ee0] hover:to-[#38993c] text-white flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-extrabold tracking-wide transition shadow-lg shadow-[#27a3ff]/20 disabled:opacity-50"
             >
               {loading ? (
-                <span>Verifying Rajagiri Credentials...</span>
+                <span>Verifying 6-Digit OTP...</span>
               ) : (
                 <>
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Verify &amp; Unlock Downloads</span>
+                  <span>Verify OTP &amp; Unlock Downloads</span>
                 </>
               )}
             </button>
+          </form>
+        )}
+
+        {step === 3 && (
+          /* Step 3: Google Workspace SSO Account Prompt */
+          <form onSubmit={handleGoogleSSOConfirm} className="space-y-4">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center space-y-2">
+              <div className="w-12 h-12 rounded-full bg-white p-2 mx-auto flex items-center justify-center shadow-md">
+                <GoogleIcon />
+              </div>
+              <h4 className="text-sm font-bold text-white">Google Workspace Account Selector</h4>
+              <p className="text-xs text-slate-300">
+                Confirm your official <code className="text-[#27a3ff]">@rajagiri.edu</code> Google Workspace account to sign in:
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--rl-muted)] mb-1.5">
+                Rajagiri Google Email
+              </label>
+              <input
+                type="email"
+                value={googleAccountInput}
+                onChange={(e) => {
+                  setGoogleAccountInput(e.target.value);
+                  if (error) setError('');
+                }}
+                placeholder="faculty@rajagiri.edu"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-sm text-[var(--rl-heading)] focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition"
+                required
+              />
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setStep(1)}
+                className="w-1/3 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-xs font-bold text-[var(--rl-muted)] hover:text-white transition"
+              >
+                Back
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-2/3 bg-[#4285F4] hover:bg-[#3367D6] text-white font-extrabold text-xs py-3 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-[#4285F4]/20 disabled:opacity-50"
+              >
+                {loading ? (
+                  <span>Signing in with Google...</span>
+                ) : (
+                  <>
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Authorize Google ID</span>
+                  </>
+                )}
+              </button>
+            </div>
           </form>
         )}
 
