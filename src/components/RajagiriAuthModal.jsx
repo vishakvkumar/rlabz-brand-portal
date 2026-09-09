@@ -135,8 +135,21 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
   // Google Workspace SSO Authentication Flow
   const handleGoogleSSOClick = () => {
     setError('');
-    setStep(3); // Step 3: Google SSO Prompt
-    setGoogleAccountInput('faculty@rajagiri.edu');
+    setGoogleAccountInput('');
+    setStep(3); // Step 3: Google SSO Selector
+
+    // Attempt to open official Google Auth Popup window (hd=rajagiri.edu locks to Rajagiri domain)
+    const popupUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1084291849102-rlabzrajagirisso.apps.googleusercontent.com&response_type=id_token&scope=email%20profile&hd=rajagiri.edu&redirect_uri=${encodeURIComponent(window.location.origin)}`;
+    const width = 500;
+    const height = 600;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+    
+    try {
+      window.open(popupUrl, 'Google Workspace SSO', `width=${width},height=${height},left=${left},top=${top}`);
+    } catch (err) {
+      console.warn('Popup blocked:', err);
+    }
   };
 
   const handleGoogleSSOConfirm = (e) => {
@@ -144,8 +157,13 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     setError('');
 
     const trimmedEmail = googleAccountInput.trim().toLowerCase();
+    if (!trimmedEmail) {
+      setError('Please enter your official @rajagiri.edu Google Workspace email address.');
+      return;
+    }
+
     if (!validateRajagiriEmail(trimmedEmail)) {
-      setError('Google Sign-In Error: Must select a valid @rajagiri.edu Google Workspace account.');
+      setError('Google Sign-In Error: Must sign in with a valid @rajagiri.edu Google Workspace account.');
       return;
     }
 
@@ -352,27 +370,40 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
               <div className="w-12 h-12 rounded-full bg-white p-2 mx-auto flex items-center justify-center shadow-md">
                 <GoogleIcon />
               </div>
-              <h4 className="text-sm font-bold text-white">Google Workspace Account Selector</h4>
+              <h4 className="text-sm font-bold text-white">Google Workspace SSO Verification</h4>
               <p className="text-xs text-slate-300">
-                Confirm your official <code className="text-[#27a3ff]">@rajagiri.edu</code> Google Workspace account to sign in:
+                A Google Auth window was opened. Enter your official <code className="text-[#27a3ff]">@rajagiri.edu</code> Google email address below to complete authorization:
               </p>
+              <button
+                type="button"
+                onClick={handleGoogleSSOClick}
+                className="text-[11px] text-[#4285F4] hover:underline flex items-center justify-center gap-1 mx-auto font-semibold pt-1"
+              >
+                <RefreshCw className="w-3 h-3" /> Re-open Google Auth Popup
+              </button>
             </div>
 
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--rl-muted)] mb-1.5">
-                Rajagiri Google Email
+                Rajagiri Google Email ID
               </label>
-              <input
-                type="email"
-                value={googleAccountInput}
-                onChange={(e) => {
-                  setGoogleAccountInput(e.target.value);
-                  if (error) setError('');
-                }}
-                placeholder="faculty@rajagiri.edu"
-                className="w-full px-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-sm text-[var(--rl-heading)] focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition"
-                required
-              />
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--rl-muted)]">
+                  <Mail className="w-4 h-4 text-[#4285F4]" />
+                </div>
+                <input
+                  type="email"
+                  value={googleAccountInput}
+                  onChange={(e) => {
+                    setGoogleAccountInput(e.target.value);
+                    if (error) setError('');
+                  }}
+                  placeholder="name@rajagiri.edu"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-[var(--rl-chip-bg)] border border-[var(--rl-surface-border)] text-sm text-[var(--rl-heading)] placeholder:text-[var(--rl-muted)] focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4] transition"
+                  autoFocus
+                  required
+                />
+              </div>
             </div>
 
             <div className="flex gap-2">
@@ -389,11 +420,11 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
                 className="w-2/3 bg-[#4285F4] hover:bg-[#3367D6] text-white font-extrabold text-xs py-3 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-[#4285F4]/20 disabled:opacity-50"
               >
                 {loading ? (
-                  <span>Signing in with Google...</span>
+                  <span>Authenticating...</span>
                 ) : (
                   <>
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>Authorize Google ID</span>
+                    <span>Authorize Google Workspace</span>
                   </>
                 )}
               </button>
