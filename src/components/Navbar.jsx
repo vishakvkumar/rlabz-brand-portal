@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShieldCheck, LogOut, Lock, User } from 'lucide-react';
 import CrucibleLogo from './CrucibleLogo';
+import { useAuth } from '../context/AuthContext';
 
 export const Navbar = ({ onDownloadBrandKit }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout, requireAuth } = useAuth();
 
   const navLinks = [
     { name: 'Story', path: '/' },
@@ -45,6 +47,33 @@ export const Navbar = ({ onDownloadBrandKit }) => {
               </NavLink>
             ))}
           </nav>
+
+          {/* Rajagiri User Authentication Badge / Sign In Trigger */}
+          <div className="hidden sm:flex items-center gap-3 shrink-0">
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#002c49]/80 border border-[#43ae47]/50 text-xs font-medium text-slate-200 backdrop-blur-md shadow-md">
+                <ShieldCheck className="w-4 h-4 text-[#43ae47]" />
+                <span className="max-w-[140px] truncate text-[11px]" title={user.email}>
+                  {user.email}
+                </span>
+                <button
+                  onClick={logout}
+                  title="Sign Out of Rajagiri ID"
+                  className="p-1 rounded-full text-slate-400 hover:text-red-400 hover:bg-white/10 transition ml-1"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => requireAuth(null)}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[var(--rl-chip-bg)] border border-[#27a3ff]/40 text-xs font-bold text-slate-200 hover:border-[#27a3ff] hover:text-white transition"
+              >
+                <Lock className="w-3.5 h-3.5 text-[#27a3ff]" />
+                <span>Rajagiri Sign In</span>
+              </button>
+            )}
+          </div>
 
           {/* Mobile menu toggle */}
           <div className="flex lg:hidden items-center gap-2">

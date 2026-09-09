@@ -2,31 +2,36 @@ import React, { useState } from 'react';
 import { Download, CheckCircle2, XCircle, Layers, Eye, Maximize2, FileImage } from 'lucide-react';
 import CrucibleLogo, { CrucibleMark } from './CrucibleLogo';
 import { BRAND_DOS_DONTS } from '../data/brandData';
+import { useAuth } from '../context/AuthContext';
 import logoDarkAsset from '../assets/logo-dark.png';
 import logoLightAsset from '../assets/logo-light.png';
 import logoSymbolAsset from '../assets/logo-symbol.png';
 
 export const LogoSystem = ({ onTriggerToast }) => {
   const [showClearSpace, setShowClearSpace] = useState(true);
+  const { requireAuth } = useAuth();
 
   // Download exact PNG image
   const handleDownloadPNG = (assetPath, filename) => {
-    const link = document.createElement('a');
-    link.href = assetPath;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    requireAuth(() => {
+      const link = document.createElement('a');
+      link.href = assetPath;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-    onTriggerToast({
-      type: 'download',
-      title: 'PNG Exported',
-      message: `Downloaded ${filename} successfully.`,
+      onTriggerToast({
+        type: 'download',
+        title: 'PNG Exported',
+        message: `Downloaded ${filename} successfully.`,
+      });
     });
   };
 
   // Download scalable SVG file
   const handleDownloadSVG = (variant, filename) => {
+    requireAuth(() => {
     let svgContent = '';
     if (variant === 'symbol') {
       svgContent = `<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,6 +93,7 @@ export const LogoSystem = ({ onTriggerToast }) => {
       type: 'download',
       title: 'SVG Exported',
       message: `Downloaded ${filename} vector.`,
+    });
     });
   };
 

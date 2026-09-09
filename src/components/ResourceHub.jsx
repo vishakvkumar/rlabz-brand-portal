@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { Download, Sparkles, FolderDown } from 'lucide-react';
 import { ASSET_PACKAGES } from '../data/brandData';
+import { useAuth } from '../context/AuthContext';
 
 export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {
   const [downloadingId, setDownloadingId] = useState(null);
+  const { requireAuth } = useAuth();
 
   const handleIndividualDownload = (asset) => {
-    setDownloadingId(asset.id);
+    requireAuth(() => {
+      setDownloadingId(asset.id);
 
-    if (asset.id === 'logo-kit-vector') {
-      setDownloadingId(null);
-      onDownloadBrandKit();
-      return;
-    }
+      if (asset.id === 'logo-kit-vector') {
+        setDownloadingId(null);
+        onDownloadBrandKit();
+        return;
+      }
 
     // Real official template files ship as static assets — download them directly.
     if (asset.fileUrl) {
@@ -60,6 +63,7 @@ export const ResourceHub = ({ onDownloadBrandKit, onTriggerToast }) => {
         message: `Downloaded ${asset.title} successfully.`,
       });
     }, 800);
+    });
   };
 
   return (

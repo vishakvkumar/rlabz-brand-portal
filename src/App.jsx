@@ -5,7 +5,9 @@ import confetti from 'canvas-confetti';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
+import RajagiriAuthModal from './components/RajagiriAuthModal';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 import HomePage from './pages/HomePage';
 import LogosPage from './pages/LogosPage';
@@ -25,13 +27,14 @@ function ScrollToTop() {
 
 export function AppContent() {
   const [toast, setToast] = useState(null);
+  const { requireAuth } = useAuth();
 
   const triggerToast = (toastData) => {
     setToast(toastData);
   };
 
-  // Master Brand Kit ZIP Downloader using JSZip
-  const handleDownloadBrandKit = async () => {
+  // Master Brand Kit ZIP Downloader using JSZip (Protected by Rajagiri Auth)
+  const executeDownloadBrandKit = async () => {
     try {
       triggerToast({
         type: 'info',
@@ -90,6 +93,10 @@ export function AppContent() {
     }
   };
 
+  const handleDownloadBrandKit = () => {
+    requireAuth(executeDownloadBrandKit);
+  };
+
   return (
     <div className="relative min-h-screen text-[var(--rl-heading)] overflow-x-hidden selection:bg-[#27a3ff] selection:text-white flex flex-col justify-between font-sans antialiased">
       <ScrollToTop />
@@ -118,6 +125,9 @@ export function AppContent() {
 
       {/* Floating Toast Notification */}
       <Toast toast={toast} onClose={() => setToast(null)} />
+
+      {/* Rajagiri Authentication Modal */}
+      <RajagiriAuthModal onTriggerToast={triggerToast} />
     </div>
   );
 }
@@ -125,9 +135,11 @@ export function AppContent() {
 export function App() {
   return (
     <ThemeProvider>
-      <Router>
-        <AppContent />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }
