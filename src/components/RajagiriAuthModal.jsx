@@ -195,27 +195,63 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     }, 300);
   };
 
-  // Google Workspace SSO Authentication Launcher
+  // Google Workspace SSO Authentication Launcher using Official Google Identity Services SDK
   const handleGoogleSSOClick = () => {
     setError('');
+
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '666221517622-keeo45hfi0s0cv9vpde147aj91k8f88o.apps.googleusercontent.com';
+
+    if (window.google?.accounts?.oauth2) {
+      try {
+        const client = window.google.accounts.oauth2.initTokenClient({
+          client_id: clientId,
+          scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+          hd: 'rajagiri.edu',
+          callback: async (tokenResponse) => {
+            if (tokenResponse && tokenResponse.access_token) {
+              setLoading(true);
+              try {
+                // Fetch authentic profile directly from Google's UserInfo API
+                const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                  headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+                });
+                const userInfo = await res.json();
+                setLoading(false);
+
+                if (userInfo?.email) {
+                  const userEmail = userInfo.email.toLowerCase();
+                  if (userEmail.endsWith('@rajagiri.edu')) {
+                    completeAuth(userEmail);
+                    if (onTriggerToast) {
+                      onTriggerToast({
+                        type: 'success',
+                        title: 'Google OAuth Verified!',
+                        message: `Authenticated as ${userEmail} via Google Workspace.`,
+                      });
+                    }
+                  } else {
+                    setError(`Access Denied: ${userEmail} is not an authorized @rajagiri.edu account.`);
+                  }
+                } else {
+                  setError('Could not retrieve email profile from Google OAuth.');
+                }
+              } catch (err) {
+                setLoading(false);
+                console.error('Google UserInfo error:', err);
+                setError('Failed to verify user profile with Google API.');
+              }
+            }
+          },
+        });
+        client.requestAccessToken();
+        return;
+      } catch (err) {
+        console.warn('Token client initialization fallback:', err);
+      }
+    }
+
     setGoogleAccountInput('');
     setStep(3);
-
-    // Custom Google Client ID from environment or official client ID
-    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '666221517622-keeo45hfi0s0cv9vpde147aj91k8f88o.apps.googleusercontent.com';
-
-    // Launch official Google OAuth popup window
-    const popupUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&response_type=id_token&scope=email%20profile&hd=rajagiri.edu&redirect_uri=${encodeURIComponent(window.location.origin)}`;
-    const width = 500;
-    const height = 600;
-    const left = window.screenX + (window.outerWidth - width) / 2;
-    const top = window.screenY + (window.outerHeight - height) / 2;
-    
-    try {
-      window.open(popupUrl, 'Google Workspace SSO', `width=${width},height=${height},left=${left},top=${top}`);
-    } catch (err) {
-      console.warn('Popup notice:', err);
-    }
   };
 
   const handleGoogleSSOConfirm = (e) => {
