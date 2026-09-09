@@ -37,8 +37,9 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     const initGoogleGSI = () => {
       if (window.google?.accounts?.id) {
         try {
+          const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '666221517622-keeo45hfi0s0cv9vpde147aj91k8f88o.apps.googleusercontent.com';
           window.google.accounts.id.initialize({
-            client_id: '1084291849102-rlabzrajagirisso.apps.googleusercontent.com',
+            client_id: clientId,
             callback: handleGoogleCredentialResponse,
             auto_select: false,
           });
@@ -200,8 +201,8 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
     setGoogleAccountInput('');
     setStep(3);
 
-    // Custom Google Client ID from environment or fallback
-    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '1084291849102-rlabzrajagirisso.apps.googleusercontent.com';
+    // Custom Google Client ID from environment or official client ID
+    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '666221517622-keeo45hfi0s0cv9vpde147aj91k8f88o.apps.googleusercontent.com';
 
     // Launch official Google OAuth popup window
     const popupUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&response_type=id_token&scope=email%20profile&hd=rajagiri.edu&redirect_uri=${encodeURIComponent(window.location.origin)}`;
