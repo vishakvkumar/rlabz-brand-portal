@@ -178,7 +178,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl bg-[var(--rl-bg)] border border-[#27a3ff]/30 shadow-[0_0_50px_rgba(39,163,255,0.2)] text-[var(--rl-heading)] overflow-hidden">
+      <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl frosted-glass-card border border-[#27a3ff]/30 shadow-[0_0_50px_rgba(39,163,255,0.25)] text-[var(--rl-heading)] overflow-hidden">
         
         {/* Close Button */}
         <button
@@ -222,7 +222,7 @@ export const RajagiriAuthModal = ({ onTriggerToast }) => {
           <button
             onClick={handleGoogleSSOClick}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-3.5 px-5 rounded-2xl bg-white text-slate-800 hover:bg-slate-100 font-extrabold text-xs shadow-xl transition border border-slate-200 disabled:opacity-50"
+            className="w-full btn-glass-primary flex items-center justify-center gap-3 py-3.5 px-5 rounded-full text-xs font-extrabold shadow-xl transition disabled:opacity-50"
           >
             <GoogleIcon />
             <span>{loading ? 'Authenticating with Google...' : 'Sign in with Google (@rajagiri.edu)'}</span>

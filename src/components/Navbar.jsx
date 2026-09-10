@@ -48,10 +48,10 @@ export const Navbar = ({ onDownloadBrandKit }) => {
             ))}
           </nav>
 
-          {/* Rajagiri User Authentication Badge / Sign In Trigger */}
+          {/* Rajagiri User Authentication Badge / Glass Sign In Trigger */}
           <div className="hidden sm:flex items-center gap-3 shrink-0">
             {isAuthenticated ? (
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#002c49]/80 border border-[#43ae47]/50 text-xs font-medium text-slate-200 backdrop-blur-md shadow-md">
+              <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#002c49]/80 border border-[#43ae47]/50 text-xs font-medium text-slate-200 backdrop-blur-md shadow-md">
                 <ShieldCheck className="w-4 h-4 text-[#43ae47]" />
                 <span className="max-w-[140px] truncate text-[11px]" title={user.email}>
                   {user.email}
@@ -67,9 +67,9 @@ export const Navbar = ({ onDownloadBrandKit }) => {
             ) : (
               <button
                 onClick={() => requireAuth(null)}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[var(--rl-chip-bg)] border border-[#27a3ff]/40 text-xs font-bold text-slate-200 hover:border-[#27a3ff] hover:text-white transition"
+                className="btn-glass-primary flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-extrabold tracking-wide"
               >
-                <Lock className="w-3.5 h-3.5 text-[#27a3ff]" />
+                <Lock className="w-4 h-4" />
                 <span>Rajagiri Sign In</span>
               </button>
             )}
