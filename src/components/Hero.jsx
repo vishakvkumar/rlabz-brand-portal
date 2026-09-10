@@ -79,12 +79,12 @@ export const Hero = ({ onDownloadBrandKit }) => {
               <div className="absolute inset-4 rounded-2xl border border-dashed border-[var(--rl-surface-border)] pointer-events-none group-hover:border-[#27a3ff]/40 transition-colors" />
 
               {/* Floating Color Blade Badges */}
-              <div className="absolute top-6 left-6 px-3 py-1.5 rounded-xl bg-[#001526]/80 border border-white/15 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 shadow-xl backdrop-blur-md">
+              <div className="absolute top-6 left-6 z-20 px-3 py-1.5 rounded-xl bg-[#001526]/80 border border-white/15 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 shadow-xl backdrop-blur-md">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#27a3ff] shadow-[0_0_8px_#27a3ff]" />
                 <span>#27a3ff Cyan</span>
               </div>
 
-              <div className="absolute bottom-20 right-6 px-3 py-1.5 rounded-xl bg-[#001526]/80 border border-white/15 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 shadow-xl backdrop-blur-md">
+              <div className="absolute top-6 right-6 z-20 px-3 py-1.5 rounded-xl bg-[#001526]/80 border border-white/15 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 shadow-xl backdrop-blur-md">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#43ae47] shadow-[0_0_8px_#43ae47]" />
                 <span>#43ae47 Green</span>
               </div>
