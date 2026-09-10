@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Download } from 'lucide-react';
 import logoSymbolAsset from '../assets/logo-symbol.png';
-import labCohortAsset from '../assets/lab-cohort.jpg';
 
 export const Hero = ({ onDownloadBrandKit }) => {
   return (
@@ -72,48 +71,40 @@ export const Hero = ({ onDownloadBrandKit }) => {
 
           </div>
 
-          {/* Right Column: Cinematic Documentary Photo + Floating Crucible Emblem */}
+          {/* Right Column: Pure 3D Translucent Glass Specimen Card */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-md rounded-3xl overflow-hidden border border-white/15 bg-[#001526] shadow-2xl group">
+            <div className="relative w-full max-w-md bg-[var(--rl-chip-bg)] backdrop-blur-2xl border border-[var(--rl-surface-border)] rounded-3xl p-8 sm:p-10 shadow-[0_12px_40px_rgba(0,0,0,0.37)] hover:border-[#27a3ff]/40 transition-all duration-500 flex flex-col items-center justify-center text-center group overflow-hidden">
+              
+              {/* Inner illuminated glass accent ring */}
+              <div className="absolute inset-4 rounded-2xl border border-dashed border-[var(--rl-surface-border)] pointer-events-none group-hover:border-[#27a3ff]/40 transition-colors" />
 
-              {/* Documentary Cohort Background Photo */}
-              <div className="relative h-96 w-full overflow-hidden">
+              {/* Floating Color Blade Badges */}
+              <div className="absolute top-6 left-6 px-3 py-1.5 rounded-xl bg-[#001526]/80 border border-white/15 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 shadow-xl backdrop-blur-md">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27a3ff] shadow-[0_0_8px_#27a3ff]" />
+                <span>#27a3ff Cyan</span>
+              </div>
+
+              <div className="absolute bottom-20 right-6 px-3 py-1.5 rounded-xl bg-[#001526]/80 border border-white/15 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 shadow-xl backdrop-blur-md">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#43ae47] shadow-[0_0_8px_#43ae47]" />
+                <span>#43ae47 Green</span>
+              </div>
+
+              {/* Centered Floating 3D Emblem */}
+              <div className="relative z-10 flex items-center justify-center py-6 my-2">
                 <img
-                  src={labCohortAsset}
-                  alt="RLabZ engineers and designers collaborating in the innovation lab"
-                  className="w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.05] transition-transform duration-700 group-hover:scale-105"
+                  src={logoSymbolAsset}
+                  alt="RLabZ 4-Blade Crucible Emblem Specimen"
+                  className="w-56 h-56 object-contain filter drop-shadow-[0_20px_45px_rgba(39,163,255,0.45)] transition-transform duration-500 hover:scale-105"
                 />
-
-                {/* Cinematic Navy Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001526] via-[#001526]/75 to-transparent" />
-
-                {/* Centered Floating 3D Crucible Emblem */}
-                <div className="absolute inset-0 flex items-center justify-center p-6">
-                  <img
-                    src={logoSymbolAsset}
-                    alt="RLabZ 4-Blade Crucible Emblem"
-                    className="w-48 h-48 object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] filter transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
-
-                {/* Top Badge: Quiet editorial label */}
-                <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 border border-white/20 text-[11px] font-semibold text-slate-200 backdrop-blur-md">
-                  In The Lab &bull; Cohort 2026
-                </div>
               </div>
 
               {/* Bottom Card Caption */}
-              <div className="p-6 pt-2 bg-[#001526] border-t border-white/10">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold tracking-wider text-slate-200 uppercase">
-                    The Innovation Crucible
-                  </span>
-                  <span className="text-[10px] font-mono text-slate-400">
-                    #002c49 &bull; #27a3ff &bull; #43ae47
-                  </span>
-                </div>
-                <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                  Real client projects, high-stakes pressure, and transformed talent. The authentic crucible identity in action.
+              <div className="pt-4 border-t border-[var(--rl-surface-border)] w-full text-center relative z-10">
+                <span className="text-xs font-bold uppercase tracking-widest text-[#27a3ff]">
+                  3D Translucent Glass Specimen
+                </span>
+                <p className="text-[11px] text-[var(--rl-muted)] mt-1.5 max-w-xs mx-auto leading-relaxed">
+                  Precision 4-blade curved emblem symbolizing heat, pressure, and transformation.
                 </p>
               </div>
 
